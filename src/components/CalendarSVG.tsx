@@ -1,10 +1,10 @@
 import React from "react";
-import { DailyContent, LunarInfo } from "../types";
+import { CalendarContent, LunarInfo } from "../types";
 
 interface CalendarSVGProps {
   date: Date;
   lunar: LunarInfo;
-  content: DailyContent;
+  content: CalendarContent;
 }
 
 const CalendarSVG: React.FC<CalendarSVGProps> = ({ date, lunar, content }) => {
@@ -74,15 +74,17 @@ const CalendarSVG: React.FC<CalendarSVGProps> = ({ date, lunar, content }) => {
       </text>
 
       {/* 宜/忌活动 */}
-      <text
-        x="300"
-        y="590"
-        fontSize="48"
-        textAnchor="middle"
-        className="serif-sc font-bold"
-      >
-        {content.activity}
-      </text>
+      {content.activity && (
+        <text
+          x="300"
+          y="590"
+          fontSize="48"
+          textAnchor="middle"
+          className="serif-sc font-bold"
+        >
+          {content.activity}
+        </text>
+      )}
 
       {/* 品牌标识区域 */}
       <g transform="translate(480, 570)">

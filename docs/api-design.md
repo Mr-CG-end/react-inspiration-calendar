@@ -75,7 +75,7 @@ interface CalendarContent {
   /** 关联日期，用于多条数据时按日期匹配（格式 'YYYY-MM-DD'，基于本地时区） */
   date?: string;
   /** 活动文字，如 "宜独处" */
-  activity: string;
+  activity?: string;
   /** 引言正文 */
   quote: string;
   /** 引言作者 */

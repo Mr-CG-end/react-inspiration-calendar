@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import CalendarSVG from "./components/CalendarSVG";
 import { getLunarInfo } from "./utils/lunar";
-import { DailyContent } from "./types";
+import { CalendarContent } from "./types";
 import { parseLocalDate, formatLocalDate } from "./utils/dateUtils";
 
 // 硬编码备用内容，供 P0 阶段验证使用
-const fallbackContent: DailyContent = {
+const fallbackContent: CalendarContent = {
   activity: "读书",
   quote: "学而不思则罔，思而不学则殆。",
   author: "孔子",

@@ -1,14 +1,26 @@
-
-export interface DailyContent {
-  activity: string;
+/** 日历卡片的文字内容 */
+export interface CalendarContent {
+  date?: string;
+  activity?: string;
   quote: string;
   author: string;
   source: string;
 }
 
+/** 农历信息 */
 export interface LunarInfo {
   weekday: string;
   monthInWords: string;
   lunarMonth: string;
   lunarDay: string;
+}
+
+/** Calendar 组件 Props */
+export interface CalendarProps {
+  date?: Date;
+  content?: CalendarContent | CalendarContent[];
+  fetchContent?: (date: Date) => Promise<CalendarContent>;
+  theme?: "classic" | "dark" | "minimalist";
+  visible?: boolean;
+  className?: string; // 自定义外层 className
 }
