@@ -42,7 +42,7 @@ const App: React.FC = () => {
     <div className="min-h-screen bg-stone-100 flex flex-col items-center py-12 px-4">
       {/* 控制面板 */}
       <div className="w-full max-w-md bg-white p-6 rounded-2xl shadow-xl mb-12 flex flex-col gap-4 border border-stone-200">
-        <h1 className="text-xl font-bold text-gray-800 text-center tracking-widest uppercase">源境日历 · YUANJING</h1>
+        <h1 className="text-xl font-bold text-gray-800 text-center tracking-widest uppercase">灵感日历 · Inspiration Calendar</h1>
         <div className="flex items-center gap-4">
           <label htmlFor="date" className="text-sm font-medium text-gray-600 shrink-0">日期</label>
           <input 
@@ -83,7 +83,7 @@ const App: React.FC = () => {
       {/* 页脚信息 */}
       <footer className="mt-16 text-stone-400 text-xs text-center max-w-sm tracking-wider">
         <p>POWERED BY GEMINI 3 FLASH</p>
-        <p className="mt-1">© 2025 YUANJING CALENDAR</p>
+        <p className="mt-1">© 2025 INSPIRATION CALENDAR</p>
       </footer>
     </div>
   );

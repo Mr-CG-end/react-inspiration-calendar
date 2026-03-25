@@ -29,8 +29,8 @@
 
 ### 品牌标识
 
-- 中文："源境日历"
-- 英文："YUANJING"
+- 中文："灵感日历"
+- 英文："INSPIRATION CALENDAR"
 - 各主题可自行决定品牌标识的展示方式和位置
 
 ---
@@ -77,7 +77,7 @@
 │  │          24              │ ← 主日期数字（居中，y=450）
 │  │                         │
 │  │        宜自省             │ ← 活动文字（居中，y=590）
-│  │                  源境日历 │ ← 品牌标识（右下角，弧形文字）
+│  │                  灵感日历 │ ← 品牌标识（右下角，弧形文字）
 │  │─────────────────────────│ ← 分隔线（y=650）
 │  │                         │
 │  │  引言正文内容...          │ ← 引言区域（foreignObject, y=680）
@@ -91,7 +91,7 @@
 ### 特殊元素
 
 - 内边框：SVG `<rect>` 双层边框效果
-- 品牌弧形文字：使用 SVG `<textPath>` 沿弧形路径排列 "2025 BY YUANJING"
+- 品牌弧形文字：使用 SVG `<textPath>` 沿弧形路径排列 "2025 INSPIRATION CALENDAR"
 - 分隔线：上下两条水平线划分三个内容区域
 
 ---
@@ -133,7 +133,7 @@ Stitch 屏幕 "Premium Dark Mode Calendar Card"（09c49894）。
 
 - **无内边框**：去掉 Classic 的双层 `<rect>` 边框，改用四角装饰纹样
 - **装饰角花**：四个角各有一个小的 L 形或花纹装饰元素（金色，低透明度）
-- **品牌标识**：简化，仅在活动文字右侧小字展示"源境日历"
+- **品牌标识**：简化，仅在活动文字右侧小字展示"灵感日历"
 - **分隔线**：金色低透明度线条
 
 ### 关键视觉特征
@@ -193,7 +193,7 @@ Stitch 屏幕 "Minimalist Daily Calendar Card"（794b038e）。
 │                               │
 │  《出处》· 作者                 │ ← 来源信息（居中，中灰色）
 │                               │
-│         YUANJING               │ ← 品牌（居中底部，极小字号）
+│     INSPIRATION CALENDAR       │ ← 品牌（居中底部，极小字号）
 └───────────────────────────────┘
 ```
 
@@ -227,7 +227,7 @@ Stitch 屏幕 "Minimalist Daily Calendar Card"（794b038e）。
 ## 实现注意事项
 
 1. **SVG 渲染**：三种主题均使用 SVG 渲染（viewBox 600x900），通过 CSS Modules 控制 SVG 容器的外层样式（背景色、阴影、圆角），SVG 内部样式通过内联属性控制
-2. **字体加载**：三种主题共用 `Noto Serif SC`；Minimalist 额外需要 `Noto Sans SC`。字体加载由宿主应用负责，组件文档中须说明字体依赖
+2. **字体加载（可选增强）**：三种主题共用 `Noto Serif SC`；Minimalist 额外需要 `Noto Sans SC`。字体为可选增强项，非必要依赖——CSS 中的 `font-family` 声明必须包含合理的系统 fallback（如 `'Noto Serif SC', 'Songti SC', serif`），确保未加载自定义字体时日历仍可正常渲染。组件文档中注明"推荐加载 Noto Serif SC / Noto Sans SC 以获得最佳视觉效果"
 3. **色值作为 CSS 变量**：建议在 `base.module.css` 中定义 CSS 自定义属性（如 `--calendar-bg`、`--calendar-text`），各主题样式文件覆盖这些变量，简化组件内的样式切换
 4. **装饰元素**：Dark 主题的角花纹样可用 SVG `<path>` 或 `<polygon>` 绘制，保持矢量化；也可以考虑简单的 L 形线条代替复杂纹样
 5. **foreignObject 兼容**：引言区域使用 `<foreignObject>` 以支持自动换行。三种主题中此区域的字体、颜色、行高不同，需通过 CSS Modules 中的类名控制

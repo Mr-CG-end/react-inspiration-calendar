@@ -51,7 +51,7 @@ Props 输入 → 日期处理 → 内容解析（按 date 匹配 / 异步获取�
 
 ### `themes/ClassicCalendar.tsx` — 主题组件
 
-职责：接收标准化的数据，负责具体的 SVG/DOM 渲染。
+职责：接收标准化的数据，负责具体的 SVG 渲染。所有主题统一使用 SVG（viewBox 600×900）进行渲染，不使用 DOM 方案。
 
 **来源**：从现有的 `CalendarSVG.tsx` 改造而来。
 

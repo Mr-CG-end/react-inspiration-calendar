@@ -21,9 +21,11 @@
 - [ ] 移除 `.env.example` 和 `.env.local` 中的 API Key 相关内容
 - [ ] 移除 `vite.config.ts` 中 `process.env.API_KEY` 的 define 配置
 - [ ] 移除 `App.tsx` 中对 `geminiService` 的导入和调用
-- [ ] 确认项目仍能正常启动（`pnpm dev`）
+- [ ] 创建 `src/utils/dateUtils.ts`，封装 `parseLocalDate(dateStr)` 和 `formatLocalDate(date)` 工具函数，统一项目中的本地日期处理，避免 `new Date('YYYY-MM-DD')` 的 UTC 时区陷阱
+- [ ] 替换 `App.tsx` 中 `new Date(e.target.value)` / `toISOString()` 为上述工具函数
+- [ ] 确认项目仍能正常启动（`pnpm dev`）并通过 `pnpm build`
 
-**验收**：`pnpm dev` 启动无报错，页面可展示（使用硬编码内容）
+**验收**：`pnpm dev` 启动无报错，`pnpm build` 构建无报错，页面可展示（使用硬编码内容）
 
 ---
 
@@ -42,11 +44,14 @@
 - [ ] 修改 `vite.config.ts` → Vite Library Mode（仅用于 `pnpm build` 构建库产物）
 - [ ] 在 `package.json` 中添加 `dev:demo` 脚本：`vite --config vite.demo.config.ts`
 - [ ] 修改 `package.json` → 添加 `main`、`module`、`types`、`exports`（含 `./style.css` 子路径导出）、`peerDependencies`、`files` 字段
-- [ ] 修改 `tsconfig.json` → 启用 `declaration` 声明生成
-- [ ] 验证 `pnpm build` 构建成功，产物在 `dist/`
+- [ ] 创建 `tsconfig.build.json`（继承 `tsconfig.json`，覆盖 `noEmit: false`、启用 `declaration`、`emitDeclarationOnly`，`include` 仅指向 `src/`），专用于库声明文件输出；保留 `tsconfig.json` 的 `noEmit: true` 供 demo 开发使用
+- [ ] 修改 `package.json` 构建脚本：`build` 步骤先运行 `tsc -p tsconfig.build.json` 生成 `.d.ts`，再运行 `vite build` 生成 JS/CSS 产物
+- [ ] 确认 `vite.config.ts` Library Mode 的 CSS 输出文件名稳定为 `style.css`（通过 `build.lib.fileName` 或 `build.cssFileName` 配置）
+- [ ] 验证使用方可通过 `import 'react-inspiration-calendar/style.css'` 正常加载样式
+- [ ] 验证 `pnpm build` 构建成功，产物在 `dist/`（含 `.es.js` + `.cjs` + `.d.ts` + `style.css`）
 - [ ] 验证 `pnpm dev:demo` 演示应用可正常运行
 
-**验收**：`pnpm build` 生成 `.es.js` + `.cjs` + `.d.ts`（不含 UMD），`pnpm dev:demo` 可跑
+**验收**：`pnpm build` 生成 `.es.js` + `.cjs` + `.d.ts` + `style.css`（不含 UMD），`pnpm dev:demo` 可跑，`style.css` 子路径导出可用
 
 ---
 
@@ -105,7 +110,7 @@
 - [ ] 创建 `styles/minimalist.module.css`（浅米色背景 + 极简排版）
 - [ ] 创建 `themes/MinimalistCalendar.tsx`（参考 Stitch 设计稿）
 
-**验收**：三种主题均可通过 `theme` prop 切换、视觉还原设计稿、Tailwind 完全移除
+**验收**：三种主题均可通过 `theme` prop 切换、符合 `theme-styles.md` 的色彩/字体/布局规范、Tailwind 完全移除
 
 ---
 
@@ -113,6 +118,7 @@
 
 **目标**：确保包可用，完善文档
 
+- [ ] 移除 `package.json` 中的 `"private": true`（否则 `npm publish` 会被阻止）
 - [ ] 更新 `README.md`（安装、使用示例、API 文档、主题说明）
 - [ ] 添加 `LICENSE` 文件
 - [ ] 确认 `.gitignore` 和 `package.json` 的 `files` 字段正确（只发布 `dist/`）

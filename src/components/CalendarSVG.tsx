@@ -59,10 +59,10 @@ const CalendarSVG: React.FC<CalendarSVGProps> = ({ date, lunar, content }) => {
 
       {/* 品牌标识区域 */}
       <g transform="translate(480, 570)">
-        <text x="0" y="6" fontSize="14" textAnchor="middle" className="serif-sc font-black">源境日历</text>
+        <text x="0" y="6" fontSize="14" textAnchor="middle" className="serif-sc font-black">灵感日历</text>
         <text fontSize="7" fontWeight="bold">
           <textPath href="#bottomArc" startOffset="50%" textAnchor="middle" dominantBaseline="hanging">
-            2025 BY YUANJING
+            2025 INSPIRATION CALENDAR
           </textPath>
         </text>
       </g>
