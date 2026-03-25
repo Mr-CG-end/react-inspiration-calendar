@@ -2,13 +2,13 @@
 
 ## 阶段总览
 
-| 阶段 | 内容 | 验收标准 |
-|------|------|---------|
-| P0 | 清理与基础改造 | 移除 AI 依赖，项目能正常 build |
-| P1 | 组件库骨架搭建 | Vite Library Mode 构建成功，demo 能跑 |
-| P2 | 核心功能实现 | 自定义数据、真实农历、显隐控制均可用 |
-| P3 | 样式系统改造 | Tailwind → CSS Modules，3 种主题切换机制就位 |
-| P4 | 发布准备 | npm pack 本地测试通过，README 完善 |
+| 阶段 | 内容           | 验收标准                                     |
+| ---- | -------------- | -------------------------------------------- |
+| P0   | 清理与基础改造 | 移除 AI 依赖，项目能正常 build               |
+| P1   | 组件库骨架搭建 | Vite Library Mode 构建成功，demo 能跑        |
+| P2   | 核心功能实现   | 自定义数据、真实农历、显隐控制均可用         |
+| P3   | 样式系统改造   | Tailwind → CSS Modules，3 种主题切换机制就位 |
+| P4   | 发布准备       | npm pack 本地测试通过，README 完善           |
 
 ---
 
@@ -21,9 +21,9 @@
 - [x] 移除 `.env.example` 和 `.env.local` 中的 API Key 相关内容（已删除文件）
 - [x] 移除 `vite.config.ts` 中整段 Gemini 相关 define 配置（含 `process.env.API_KEY` 和 `process.env.GEMINI_API_KEY`）
 - [x] 移除 `App.tsx` 中对 `geminiService` 的导入和调用
-- [ ] 创建 `src/utils/dateUtils.ts`，封装 `parseLocalDate(dateStr)` 和 `formatLocalDate(date)` 工具函数，统一项目中的本地日期处理，避免 `new Date('YYYY-MM-DD')` 的 UTC 时区陷阱
-- [ ] 替换 `App.tsx` 中 `new Date(e.target.value)` / `toISOString()` 为上述工具函数
-- [ ] 确认项目仍能正常启动（`pnpm dev`）并通过 `pnpm build`
+- [x] 创建 `src/utils/dateUtils.ts`，封装 `parseLocalDate(dateStr)` 和 `formatLocalDate(date)` 工具函数，统一项目中的本地日期处理，避免 `new Date('YYYY-MM-DD')` 的 UTC 时区陷阱
+- [x] 替换 `App.tsx` 中 `new Date(e.target.value)` / `toISOString()` 为上述工具函数
+- [x] 确认项目仍能正常启动（`pnpm dev`）并通过 `pnpm build`
 
 **验收**：`pnpm dev` 启动无报错，`pnpm build` 构建无报错，页面可展示（使用硬编码内容）
 
@@ -33,7 +33,7 @@
 
 **目标**：将项目从"应用"变成"库 + 演示应用"结构
 
-- [ ] 创建 `src/index.ts` 统一导出入口（只导出 Calendar + getLunarInfo + 类型）
+- [x] 创建 `src/index.ts` 统一导出入口（只导出 Calendar + getLunarInfo + 类型）
 - [ ] 创建 `src/types.ts` 新版类型定义（CalendarProps、CalendarContent 含 date 字段等）
 - [ ] 创建 `src/components/Calendar.tsx` 主组件骨架（先包裹现有 CalendarSVG，CalendarSVG 不对外导出）
 - [ ] 创建 `demo/` 目录，移入演示相关文件：
@@ -67,6 +67,7 @@
 > **注意**：P1/P2 阶段暂硬编码 classic 主题渲染，不引入主题注册表。注册表在 P3 统一实现。
 
 ### F1：自定义内容数据
+
 - [ ] 实现 `content` prop 单条模式
 - [ ] 实现 `content` prop 数组模式（按 `date` 字段自动匹配当前日期）——**必须使用 `dateUtils.parseLocalDate` 进行日期比较**，禁止直接 `new Date(string)`
 - [ ] 实现 `fetchContent` prop（异步函数方式）——内部日期处理同样使用 `dateUtils`
@@ -76,15 +77,18 @@
 - [ ] 处理竞态（日期快速切换时忽略过期请求的结果，只渲染最新日期的数据）
 
 ### F2：真实农历
+
 - [ ] 安装 `lunar-javascript`
 - [ ] 改造 `utils/lunar.ts`，返回真实农历月/日
 - [ ] 在 demo 中验证不同日期的农历正确性
 
 ### F4：显隐控制
+
 - [ ] 实现 `visible` prop，默认 `true`
 - [ ] `visible=false` 时返回 `null`（不渲染 DOM）
 
 ### 自动化测试
+
 - [ ] 为 `dateUtils`（`parseLocalDate`、`formatLocalDate`）编写单元测试，覆盖跨时区边界用例
 - [ ] 为 `content[]` 数组日期匹配逻辑编写单元测试
 - [ ] 为 `fetchContent` 竞态抑制逻辑编写单元测试（模拟快速切换场景）
@@ -100,25 +104,30 @@
 **目标**：实现需求文档中的 F3，完成 Tailwind 到 CSS Modules 的迁移，实现三种主题
 
 ### 基础样式迁移
+
 - [ ] 创建 `styles/base.module.css`（公共样式）
 - [ ] 将 `CalendarSVG.tsx` 中的 Tailwind 类名替换为 CSS Modules
 - [ ] 将 `Calendar.tsx` 容器的 Tailwind 类名替换为 CSS Modules
 - [ ] 移除 Tailwind CSS 相关依赖和配置（`tailwind.config.js`、`postcss.config.js`、index.css 中的 @tailwind 指令）
 
 ### 主题注册表
+
 - [ ] 创建 `src/components/themes/` 目录和 `index.ts` 注册表
 - [ ] 将 P1/P2 中硬编码的 classic 渲染迁移到注册表驱动
 - [ ] 实现 `theme` prop 切换（`'classic' | 'dark' | 'minimalist'`）
 
 ### Classic 主题
+
 - [ ] 创建 `styles/classic.module.css`
 - [ ] 创建 `themes/ClassicCalendar.tsx`（从现有 CalendarSVG 改造）
 
 ### Dark 主题
+
 - [ ] 创建 `styles/dark.module.css`（深色背景 #1a1a1a + 金色字体）
 - [ ] 创建 `themes/DarkCalendar.tsx`（参考 Stitch 设计稿）
 
 ### Minimalist 主题
+
 - [ ] 创建 `styles/minimalist.module.css`（浅米色背景 + 极简排版）
 - [ ] 创建 `themes/MinimalistCalendar.tsx`（参考 Stitch 设计稿）
 
@@ -152,6 +161,7 @@ P0 (清理) → P1 (骨架) → P2 (功能) → P3 (样式) → P4 (发布)
 ```
 
 每个阶段**必须完成并通过验收后**，才能进入下一阶段。各阶段的依赖关系：
+
 - P1 依赖 P0（清理完成才能搭骨架）
 - P2 依赖 P1（库结构就绪才能实现功能）
 - P3 依赖 P2（功能稳定后才做样式迁移，避免返工）

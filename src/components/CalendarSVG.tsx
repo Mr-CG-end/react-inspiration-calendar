@@ -1,5 +1,5 @@
-import React from 'react';
-import { DailyContent, LunarInfo } from '../types';
+import React from "react";
+import { DailyContent, LunarInfo } from "../types";
 
 interface CalendarSVGProps {
   date: Date;
@@ -9,10 +9,10 @@ interface CalendarSVGProps {
 
 const CalendarSVG: React.FC<CalendarSVGProps> = ({ date, lunar, content }) => {
   const day = date.getDate().toString();
-  
+
   return (
-    <svg 
-      viewBox="0 0 600 900" 
+    <svg
+      viewBox="0 0 600 900"
       className="w-full h-auto bg-white shadow-2xl border border-gray-100 rounded-2xl overflow-hidden"
       xmlns="http://www.w3.org/2000/svg"
     >
@@ -22,24 +22,51 @@ const CalendarSVG: React.FC<CalendarSVGProps> = ({ date, lunar, content }) => {
       </defs>
 
       {/* 边框：圆角较小，外边距较大 */}
-      <rect x="50" y="50" width="500" height="800" fill="none" stroke="black" strokeWidth="2" rx="4" ry="4" />
-      
+      <rect
+        x="50"
+        y="50"
+        width="500"
+        height="800"
+        fill="none"
+        stroke="black"
+        strokeWidth="2"
+        rx="4"
+        ry="4"
+      />
+
       {/* 页眉横线 */}
       <line x1="70" y1="130" x2="530" y2="130" stroke="black" strokeWidth="1" />
 
       {/* 顶部信息区域 */}
-      <text x="70" y="105" fontSize="24" className="serif-sc font-bold">{lunar.monthInWords}</text>
-      <text x="300" y="105" fontSize="16" textAnchor="middle" className="serif-sc">
-        农历{lunar.lunarMonth}{lunar.lunarDay}
+      <text x="70" y="105" fontSize="24" className="serif-sc font-bold">
+        {lunar.monthInWords}
       </text>
-      <text x="530" y="105" fontSize="24" textAnchor="end" className="serif-sc font-bold">{lunar.weekday}</text>
+      <text
+        x="300"
+        y="105"
+        fontSize="16"
+        textAnchor="middle"
+        className="serif-sc"
+      >
+        农历{lunar.lunarMonth}
+        {lunar.lunarDay}
+      </text>
+      <text
+        x="530"
+        y="105"
+        fontSize="24"
+        textAnchor="end"
+        className="serif-sc font-bold"
+      >
+        {lunar.weekday}
+      </text>
 
       {/* 主日期数字 */}
-      <text 
-        x="300" 
-        y="450" 
-        fontSize="320" 
-        textAnchor="middle" 
+      <text
+        x="300"
+        y="450"
+        fontSize="320"
+        textAnchor="middle"
         className="serif-sc font-black"
         style={{ letterSpacing: "-10px" }}
       >
@@ -47,11 +74,11 @@ const CalendarSVG: React.FC<CalendarSVGProps> = ({ date, lunar, content }) => {
       </text>
 
       {/* 宜/忌活动 */}
-      <text 
-        x="300" 
-        y="590" 
-        fontSize="48" 
-        textAnchor="middle" 
+      <text
+        x="300"
+        y="590"
+        fontSize="48"
+        textAnchor="middle"
         className="serif-sc font-bold"
       >
         {content.activity}
@@ -59,9 +86,22 @@ const CalendarSVG: React.FC<CalendarSVGProps> = ({ date, lunar, content }) => {
 
       {/* 品牌标识区域 */}
       <g transform="translate(480, 570)">
-        <text x="0" y="6" fontSize="14" textAnchor="middle" className="serif-sc font-black">灵感日历</text>
+        <text
+          x="0"
+          y="6"
+          fontSize="14"
+          textAnchor="middle"
+          className="serif-sc font-black"
+        >
+          灵感日历
+        </text>
         <text fontSize="7" fontWeight="bold">
-          <textPath href="#bottomArc" startOffset="50%" textAnchor="middle" dominantBaseline="hanging">
+          <textPath
+            href="#bottomArc"
+            startOffset="50%"
+            textAnchor="middle"
+            dominantBaseline="hanging"
+          >
             2025 INSPIRATION CALENDAR
           </textPath>
         </text>
@@ -83,7 +123,15 @@ const CalendarSVG: React.FC<CalendarSVGProps> = ({ date, lunar, content }) => {
       </text>
 
       {/* 底部品牌字样 */}
-      <text x="300" y="875" fontSize="12" textAnchor="middle" style={{ letterSpacing: "10px" }}>Y U A N J I N G</text>
+      <text
+        x="300"
+        y="875"
+        fontSize="12"
+        textAnchor="middle"
+        style={{ letterSpacing: "10px" }}
+      >
+        INSPIRATION CALENDAR
+      </text>
     </svg>
   );
 };
