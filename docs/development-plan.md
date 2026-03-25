@@ -16,11 +16,11 @@
 
 **目标**：移除不需要的代码，减轻包袱
 
-- [ ] 删除 `src/services/geminiService.ts`
-- [ ] 移除 `@google/genai` 依赖
-- [ ] 移除 `.env.example` 和 `.env.local` 中的 API Key 相关内容
-- [ ] 移除 `vite.config.ts` 中 `process.env.API_KEY` 的 define 配置
-- [ ] 移除 `App.tsx` 中对 `geminiService` 的导入和调用
+- [x] 删除 `src/services/geminiService.ts`
+- [x] 移除 `@google/genai` 依赖
+- [x] 移除 `.env.example` 和 `.env.local` 中的 API Key 相关内容（已删除文件）
+- [x] 移除 `vite.config.ts` 中整段 Gemini 相关 define 配置（含 `process.env.API_KEY` 和 `process.env.GEMINI_API_KEY`）
+- [x] 移除 `App.tsx` 中对 `geminiService` 的导入和调用
 - [ ] 创建 `src/utils/dateUtils.ts`，封装 `parseLocalDate(dateStr)` 和 `formatLocalDate(date)` 工具函数，统一项目中的本地日期处理，避免 `new Date('YYYY-MM-DD')` 的 UTC 时区陷阱
 - [ ] 替换 `App.tsx` 中 `new Date(e.target.value)` / `toISOString()` 为上述工具函数
 - [ ] 确认项目仍能正常启动（`pnpm dev`）并通过 `pnpm build`
@@ -35,23 +35,28 @@
 
 - [ ] 创建 `src/index.ts` 统一导出入口（只导出 Calendar + getLunarInfo + 类型）
 - [ ] 创建 `src/types.ts` 新版类型定义（CalendarProps、CalendarContent 含 date 字段等）
-- [ ] 创建 `Calendar.tsx` 主组件骨架（先包裹现有 CalendarSVG，CalendarSVG 不对外导出）
+- [ ] 创建 `src/components/Calendar.tsx` 主组件骨架（先包裹现有 CalendarSVG，CalendarSVG 不对外导出）
 - [ ] 创建 `demo/` 目录，移入演示相关文件：
   - [ ] `demo/index.html`
   - [ ] `demo/main.tsx`
   - [ ] `demo/DemoApp.tsx`（原 App.tsx 改造）
 - [ ] 创建 `vite.demo.config.ts`（以 `demo/index.html` 为入口的独立 Vite 配置，仅供本地开发使用）
-- [ ] 修改 `vite.config.ts` → Vite Library Mode（仅用于 `pnpm build` 构建库产物）
+- [ ] 修改 `vite.config.ts` → Vite Library Mode（仅用于 `pnpm build` 构建库产物），并在 `build.rollupOptions.external` 中显式排除 `react` 和 `react-dom`（含 `react/jsx-runtime`），确保库产物不捆绑 React
 - [ ] 在 `package.json` 中添加 `dev:demo` 脚本：`vite --config vite.demo.config.ts`
-- [ ] 修改 `package.json` → 添加 `main`、`module`、`types`、`exports`（含 `./style.css` 子路径导出）、`peerDependencies`、`files` 字段
+- [ ] 修改 `package.json`：
+  - 添加 `main`、`module`、`types`、`exports`（含 `./style.css` 子路径导出）、`files` 字段
+  - 将 `react` 和 `react-dom` 从 `dependencies` **移到** `peerDependencies`（不能同时保留在 dependencies 中，否则消费者会出现 React 实例重复）
+  - 添加 `peerDependencies` 版本约束：`"react": "^18.0.0 || ^19.0.0"`、`"react-dom": "^18.0.0 || ^19.0.0"`
 - [ ] 创建 `tsconfig.build.json`（继承 `tsconfig.json`，覆盖 `noEmit: false`、启用 `declaration`、`emitDeclarationOnly`，`include` 仅指向 `src/`），专用于库声明文件输出；保留 `tsconfig.json` 的 `noEmit: true` 供 demo 开发使用
 - [ ] 修改 `package.json` 构建脚本：`build` 步骤先运行 `tsc -p tsconfig.build.json` 生成 `.d.ts`，再运行 `vite build` 生成 JS/CSS 产物
-- [ ] 确认 `vite.config.ts` Library Mode 的 CSS 输出文件名稳定为 `style.css`（通过 `build.lib.fileName` 或 `build.cssFileName` 配置）
+- [ ] 配置代码规范工具链：ESLint（flat config + `typescript-eslint` + `eslint-plugin-react-hooks`）+ Prettier（`.prettierrc`），添加 `lint` 和 `format` 脚本到 `package.json`
+- [ ] 确认 `vite.config.ts` Library Mode 的 CSS 输出文件名稳定为 `style.css`（通过 `build.lib.cssFileName` 配置）
 - [ ] 验证使用方可通过 `import 'react-inspiration-calendar/style.css'` 正常加载样式
 - [ ] 验证 `pnpm build` 构建成功，产物在 `dist/`（含 `.es.js` + `.cjs` + `.d.ts` + `style.css`）
+- [ ] 验证构建产物中**不包含 React 实现代码**（产物应仅保留 `import "react"` 等外部引用声明，不应包含 `createElement`、`__SECRET_INTERNALS` 等 React 内部实现；可用 `npx rg "createElement|__SECRET_INTERNALS" dist/` 或打开产物文件人工检查）
 - [ ] 验证 `pnpm dev:demo` 演示应用可正常运行
 
-**验收**：`pnpm build` 生成 `.es.js` + `.cjs` + `.d.ts` + `style.css`（不含 UMD），`pnpm dev:demo` 可跑，`style.css` 子路径导出可用
+**验收**：`pnpm build` 生成 `.es.js` + `.cjs` + `.d.ts` + `style.css`（不含 UMD），产物不捆绑 React，`pnpm dev:demo` 可跑，`style.css` 子路径导出可用
 
 ---
 
@@ -63,8 +68,8 @@
 
 ### F1：自定义内容数据
 - [ ] 实现 `content` prop 单条模式
-- [ ] 实现 `content` prop 数组模式（按 `date` 字段自动匹配当前日期）
-- [ ] 实现 `fetchContent` prop（异步函数方式）
+- [ ] 实现 `content` prop 数组模式（按 `date` 字段自动匹配当前日期）——**必须使用 `dateUtils.parseLocalDate` 进行日期比较**，禁止直接 `new Date(string)`
+- [ ] 实现 `fetchContent` prop（异步函数方式）——内部日期处理同样使用 `dateUtils`
 - [ ] 实现默认备用内容（当什么都不传或无匹配时）
 - [ ] 处理加载态（fetchContent 异步等待时显示骨架 + spinner）
 - [ ] 处理错误态（失败时降级到备用内容）
@@ -79,7 +84,14 @@
 - [ ] 实现 `visible` prop，默认 `true`
 - [ ] `visible=false` 时返回 `null`（不渲染 DOM）
 
-**验收**：demo 中演示所有数据传入方式、农历显示正确、显隐开关生效
+### 自动化测试
+- [ ] 为 `dateUtils`（`parseLocalDate`、`formatLocalDate`）编写单元测试，覆盖跨时区边界用例
+- [ ] 为 `content[]` 数组日期匹配逻辑编写单元测试
+- [ ] 为 `fetchContent` 竞态抑制逻辑编写单元测试（模拟快速切换场景）
+- [ ] 为农历转换（`getLunarInfo`）编写单元测试，验证代表性日期的正确性
+- [ ] 配置测试工具链（Vitest），添加 `test` 脚本到 `package.json`
+
+**验收**：demo 中演示所有数据传入方式、农历显示正确、显隐开关生效；**所有单元测试通过**
 
 ---
 
@@ -119,6 +131,7 @@
 **目标**：确保包可用，完善文档
 
 - [ ] 移除 `package.json` 中的 `"private": true`（否则 `npm publish` 会被阻止）
+- [ ] 确认 `package.json` 发布元数据完整：`name`、`version`（非占位 0.0.0）、`license`、`repository`、`description`、`keywords`
 - [ ] 更新 `README.md`（安装、使用示例、API 文档、主题说明）
 - [ ] 添加 `LICENSE` 文件
 - [ ] 确认 `.gitignore` 和 `package.json` 的 `files` 字段正确（只发布 `dist/`）
@@ -132,9 +145,16 @@
 
 ## 执行顺序约束
 
+本项目为**单人开发**，采用严格串行执行：
+
 ```
 P0 (清理) → P1 (骨架) → P2 (功能) → P3 (样式) → P4 (发布)
-             不可跳过         可并行           依赖 P1
 ```
 
-> 每个阶段完成后，都要确认 build 和 demo 正常，再进入下一阶段。
+每个阶段**必须完成并通过验收后**，才能进入下一阶段。各阶段的依赖关系：
+- P1 依赖 P0（清理完成才能搭骨架）
+- P2 依赖 P1（库结构就绪才能实现功能）
+- P3 依赖 P2（功能稳定后才做样式迁移，避免返工）
+- P4 依赖 P3（所有功能和样式完成后才准备发布）
+
+> 每个阶段完成后，都要确认 `pnpm build` 和 `pnpm dev:demo` 正常，再进入下一阶段。
