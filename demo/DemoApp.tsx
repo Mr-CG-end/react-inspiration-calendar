@@ -1,12 +1,12 @@
-import React, { useState } from "react";
-import { Calendar, type CalendarContent } from "../src";
-import { parseLocalDate, formatLocalDate } from "../src/utils/dateUtils";
+import React, { useState } from 'react';
+import { Calendar, type CalendarContent } from '../src';
+import { parseLocalDate, formatLocalDate } from '../src/utils/dateUtils';
 
 const fallbackContent: CalendarContent = {
-  activity: "读书",
-  quote: "学而不思则罔，思而不学则殆。",
-  author: "孔子",
-  source: "论语·为政",
+  activity: '读书',
+  quote: '学而不思则罔，思而不学则殆。',
+  author: '孔子',
+  source: '论语·为政',
 };
 
 const DemoApp: React.FC = () => {
@@ -23,10 +23,7 @@ const DemoApp: React.FC = () => {
           灵感日历 · Inspiration Calendar
         </h1>
         <div className="flex items-center gap-4">
-          <label
-            htmlFor="date"
-            className="text-sm font-medium text-gray-600 shrink-0"
-          >
+          <label htmlFor="date" className="text-sm font-medium text-gray-600 shrink-0">
             日期
           </label>
           <input

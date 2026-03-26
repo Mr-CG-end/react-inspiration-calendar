@@ -20,7 +20,7 @@ export interface CalendarProps {
   date?: Date;
   content?: CalendarContent | CalendarContent[];
   fetchContent?: (date: Date) => Promise<CalendarContent>;
-  theme?: "classic" | "dark" | "minimalist";
+  theme?: 'classic' | 'dark' | 'minimalist';
   visible?: boolean;
   className?: string; // 自定义外层 className
 }

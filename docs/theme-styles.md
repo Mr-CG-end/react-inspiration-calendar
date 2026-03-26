@@ -12,15 +12,15 @@
 
 所有主题必须渲染以下 7 个内容区块：
 
-| 区块 | 数据来源 | 说明 |
-|------|---------|------|
-| 公历月份 | `lunar.monthInWords` | 如"三月" |
-| 农历日期 | `lunar.lunarMonth` + `lunar.lunarDay` | 如"农历腊月初三" |
-| 星期 | `lunar.weekday` | 如"星期二" |
-| 主日期数字 | `date.getDate()` | 如"24" |
-| 活动 | `content.activity` | 如"宜自省" |
-| 引言 | `content.quote` | 正文段落 |
-| 来源 | `content.source` + `content.author` | 如"《说苑》· 刘向" |
+| 区块       | 数据来源                              | 说明               |
+| ---------- | ------------------------------------- | ------------------ |
+| 公历月份   | `lunar.monthInWords`                  | 如"三月"           |
+| 农历日期   | `lunar.lunarMonth` + `lunar.lunarDay` | 如"农历腊月初三"   |
+| 星期       | `lunar.weekday`                       | 如"星期二"         |
+| 主日期数字 | `date.getDate()`                      | 如"24"             |
+| 活动       | `content.activity`                    | 如"宜自省"         |
+| 引言       | `content.quote`                       | 正文段落           |
+| 来源       | `content.source` + `content.author`   | 如"《说苑》· 刘向" |
 
 ### 卡片尺寸
 
@@ -45,26 +45,26 @@
 
 ### 色彩
 
-| 用途 | 色值 |
-|------|------|
-| 背景 | `#FFFFFF` |
-| 主文字 | `#000000` |
-| 边框/分隔线 | `#000000`（strokeWidth: 1-2） |
-| 卡片外阴影 | Tailwind `shadow-2xl` 等效（迁移为 CSS Modules 后用 `box-shadow`） |
-| 卡片外边框 | `#F3F4F6`（gray-100） |
+| 用途        | 色值                                                               |
+| ----------- | ------------------------------------------------------------------ |
+| 背景        | `#FFFFFF`                                                          |
+| 主文字      | `#000000`                                                          |
+| 边框/分隔线 | `#000000`（strokeWidth: 1-2）                                      |
+| 卡片外阴影  | Tailwind `shadow-2xl` 等效（迁移为 CSS Modules 后用 `box-shadow`） |
+| 卡片外边框  | `#F3F4F6`（gray-100）                                              |
 
 ### 字体
 
-| 区域 | 字族 | 字号 | 字重 |
-|------|------|------|------|
-| 月份/星期 | Noto Serif SC | 24px | bold |
-| 农历日期 | Noto Serif SC | 16px | normal |
-| 主日期数字 | Noto Serif SC | 320px | 900 (black) |
-| 活动文字 | Noto Serif SC | 48px | bold |
-| 引言正文 | Noto Serif SC | 30px (text-3xl) | normal |
-| 来源信息 | Noto Serif SC | 16px | normal |
-| 品牌中文 | Noto Serif SC | 14px | 900 (black) |
-| 品牌英文 | 默认 sans-serif | 12px，letter-spacing: 10px | normal |
+| 区域       | 字族            | 字号                       | 字重        |
+| ---------- | --------------- | -------------------------- | ----------- |
+| 月份/星期  | Noto Serif SC   | 24px                       | bold        |
+| 农历日期   | Noto Serif SC   | 16px                       | normal      |
+| 主日期数字 | Noto Serif SC   | 320px                      | 900 (black) |
+| 活动文字   | Noto Serif SC   | 48px                       | bold        |
+| 引言正文   | Noto Serif SC   | 30px (text-3xl)            | normal      |
+| 来源信息   | Noto Serif SC   | 16px                       | normal      |
+| 品牌中文   | Noto Serif SC   | 14px                       | 900 (black) |
+| 品牌英文   | 默认 sans-serif | 12px，letter-spacing: 10px | normal      |
 
 ### 布局
 
@@ -106,26 +106,26 @@ Stitch 屏幕 "Premium Dark Mode Calendar Card"（09c49894）。
 
 ### 色彩
 
-| 用途 | 色值 |
-|------|------|
-| 背景 | `#1A1A1A`（深炭黑） |
-| 主文字 | `#D4AF37`（金色） |
-| 辅助文字 | `#B8860B`（暗金色，用于来源信息等次要文字） |
-| 分隔线 | `#D4AF37`，opacity 0.3 |
-| 装饰边角 | `#D4AF37`，opacity 0.2（装饰性角花纹样） |
-| 卡片外阴影 | `0 25px 50px rgba(0, 0, 0, 0.5)` |
+| 用途       | 色值                                        |
+| ---------- | ------------------------------------------- |
+| 背景       | `#1A1A1A`（深炭黑）                         |
+| 主文字     | `#D4AF37`（金色）                           |
+| 辅助文字   | `#B8860B`（暗金色，用于来源信息等次要文字） |
+| 分隔线     | `#D4AF37`，opacity 0.3                      |
+| 装饰边角   | `#D4AF37`，opacity 0.2（装饰性角花纹样）    |
+| 卡片外阴影 | `0 25px 50px rgba(0, 0, 0, 0.5)`            |
 
 ### 字体
 
-| 区域 | 字族 | 字号 | 字重 |
-|------|------|------|------|
-| 月份/星期 | Noto Serif SC | 24px | bold |
-| 农历日期 | Noto Serif SC | 16px | normal |
+| 区域       | 字族          | 字号  | 字重        |
+| ---------- | ------------- | ----- | ----------- |
+| 月份/星期  | Noto Serif SC | 24px  | bold        |
+| 农历日期   | Noto Serif SC | 16px  | normal      |
 | 主日期数字 | Noto Serif SC | 280px | 900 (black) |
-| 活动文字 | Noto Serif SC | 48px | bold |
-| 引言正文 | Noto Serif SC | 28px | normal |
-| 来源信息 | Noto Serif SC | 14px | normal |
-| 品牌 | Noto Serif SC | 12px | bold |
+| 活动文字   | Noto Serif SC | 48px  | bold        |
+| 引言正文   | Noto Serif SC | 28px  | normal      |
+| 来源信息   | Noto Serif SC | 14px  | normal      |
+| 品牌       | Noto Serif SC | 12px  | bold        |
 
 ### 布局
 
@@ -155,26 +155,26 @@ Stitch 屏幕 "Minimalist Daily Calendar Card"（794b038e）。
 
 ### 色彩
 
-| 用途 | 色值 |
-|------|------|
-| 背景 | `#F5F0EB`（暖白/浅米色） |
-| 主文字 | `#2C2C2C`（深灰，非纯黑） |
-| 辅助文字 | `#6B6B6B`（中灰） |
-| 分隔线 | `#D1CBC4`（浅灰棕） |
-| 卡片外边框 | `#E0DAD3`（极浅灰棕） |
+| 用途       | 色值                                         |
+| ---------- | -------------------------------------------- |
+| 背景       | `#F5F0EB`（暖白/浅米色）                     |
+| 主文字     | `#2C2C2C`（深灰，非纯黑）                    |
+| 辅助文字   | `#6B6B6B`（中灰）                            |
+| 分隔线     | `#D1CBC4`（浅灰棕）                          |
+| 卡片外边框 | `#E0DAD3`（极浅灰棕）                        |
 | 卡片外阴影 | `0 4px 20px rgba(0, 0, 0, 0.08)`（轻柔阴影） |
 
 ### 字体
 
-| 区域 | 字族 | 字号 | 字重 |
-|------|------|------|------|
-| 月份/星期 | Noto Sans SC | 20px | medium |
-| 农历日期 | Noto Sans SC | 14px | normal |
-| 主日期数字 | Noto Serif SC | 260px | bold |
-| 活动文字 | Noto Serif SC | 40px | medium |
-| 引言正文 | Noto Sans SC | 18px | normal |
-| 来源信息 | Noto Sans SC | 13px | normal |
-| 品牌 | Noto Sans SC | 10px，letter-spacing: 6px | normal |
+| 区域       | 字族          | 字号                      | 字重   |
+| ---------- | ------------- | ------------------------- | ------ |
+| 月份/星期  | Noto Sans SC  | 20px                      | medium |
+| 农历日期   | Noto Sans SC  | 14px                      | normal |
+| 主日期数字 | Noto Serif SC | 260px                     | bold   |
+| 活动文字   | Noto Serif SC | 40px                      | medium |
+| 引言正文   | Noto Sans SC  | 18px                      | normal |
+| 来源信息   | Noto Sans SC  | 13px                      | normal |
+| 品牌       | Noto Sans SC  | 10px，letter-spacing: 6px | normal |
 
 ### 布局
 
@@ -211,16 +211,16 @@ Stitch 屏幕 "Minimalist Daily Calendar Card"（794b038e）。
 
 ## 主题对比总结
 
-| 维度 | Classic | Dark | Minimalist |
-|------|---------|------|------------|
-| 背景色 | 白色 | 深炭黑 | 浅米色 |
-| 文字色 | 黑色 | 金色 | 深灰 |
-| 字体风格 | 全衬线 | 全衬线 | 混合（标题衬线 + 正文无衬线） |
-| 装饰元素 | 内边框 + 弧形品牌 | 角花纹样 | 无 |
-| 分隔线 | 两条黑色 | 两条金色低透明 | 一条浅灰棕 |
-| 留白程度 | 中等 | 中等 | 大 |
-| 阴影强度 | 重 | 重 | 轻 |
-| 整体氛围 | 传统 / 书卷气 | 高端 / 仪式感 | 现代 / 清爽 |
+| 维度     | Classic           | Dark           | Minimalist                    |
+| -------- | ----------------- | -------------- | ----------------------------- |
+| 背景色   | 白色              | 深炭黑         | 浅米色                        |
+| 文字色   | 黑色              | 金色           | 深灰                          |
+| 字体风格 | 全衬线            | 全衬线         | 混合（标题衬线 + 正文无衬线） |
+| 装饰元素 | 内边框 + 弧形品牌 | 角花纹样       | 无                            |
+| 分隔线   | 两条黑色          | 两条金色低透明 | 一条浅灰棕                    |
+| 留白程度 | 中等              | 中等           | 大                            |
+| 阴影强度 | 重                | 重             | 轻                            |
+| 整体氛围 | 传统 / 书卷气     | 高端 / 仪式感  | 现代 / 清爽                   |
 
 ---
 

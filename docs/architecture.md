@@ -264,12 +264,12 @@ interface ThemeComponentProps {
 
 ## 构建产物
 
-| 文件 | 格式 | 用途 |
-|------|------|------|
-| `dist/*.es.js` | ESModule | 现代打包工具使用（`import`） |
-| `dist/*.cjs` | CommonJS | Node.js / 旧版工具使用（`require`） |
-| `dist/style.css` | CSS | 组件样式（用户需手动 `import` 引入） |
-| `dist/index.d.ts` | TypeScript 声明 | 类型提示支持 |
+| 文件              | 格式            | 用途                                 |
+| ----------------- | --------------- | ------------------------------------ |
+| `dist/*.es.js`    | ESModule        | 现代打包工具使用（`import`）         |
+| `dist/*.cjs`      | CommonJS        | Node.js / 旧版工具使用（`require`）  |
+| `dist/style.css`  | CSS             | 组件样式（用户需手动 `import` 引入） |
+| `dist/index.d.ts` | TypeScript 声明 | 类型提示支持                         |
 
 > 不提供 UMD 格式。现代 React 项目均使用打包工具，UMD 无实际需求。
 >
@@ -279,8 +279,8 @@ interface ThemeComponentProps {
 
 ## 依赖关系
 
-| 依赖 | 类型 | 说明 |
-|------|------|------|
-| `react` | peerDependency | 由宿主应用提供，不打包进库 |
-| `react-dom` | peerDependency | 由宿主应用提供，不打包进库 |
-| `lunar-javascript` | dependency | 打包进库（体积小，约 30KB gzipped） |
+| 依赖               | 类型           | 说明                                |
+| ------------------ | -------------- | ----------------------------------- |
+| `react`            | peerDependency | 由宿主应用提供，不打包进库          |
+| `react-dom`        | peerDependency | 由宿主应用提供，不打包进库          |
+| `lunar-javascript` | dependency     | 打包进库（体积小，约 30KB gzipped） |

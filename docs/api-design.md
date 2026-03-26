@@ -4,13 +4,13 @@
 
 ```typescript
 // 组件
-export { Calendar } from "./components/Calendar";
+export { Calendar } from './components/Calendar';
 
 // 工具函数
-export { getLunarInfo } from "./utils/lunar";
+export { getLunarInfo } from './utils/lunar';
 
 // 类型
-export type { CalendarProps, CalendarContent, LunarInfo } from "./types";
+export type { CalendarProps, CalendarContent, LunarInfo } from './types';
 ```
 
 > CalendarSVG 为内部实现，不作为公开 API 导出。
@@ -52,7 +52,7 @@ interface CalendarProps {
    * - 'dark'：深色背景 + 金色衬线字体
    * - 'minimalist'：浅色极简排版，大留白
    */
-  theme?: "classic" | "dark" | "minimalist";
+  theme?: 'classic' | 'dark' | 'minimalist';
 
   /**
    * 是否显示日历
@@ -127,8 +127,8 @@ interface LunarInfo {
 ### 最简使用
 
 ```tsx
-import { Calendar } from "react-inspiration-calendar";
-import "react-inspiration-calendar/style.css";
+import { Calendar } from 'react-inspiration-calendar';
+import 'react-inspiration-calendar/style.css';
 
 function App() {
   return <Calendar />;
@@ -140,10 +140,10 @@ function App() {
 ```tsx
 <Calendar
   content={{
-    activity: "宜读书",
-    quote: "书犹药也，善读之可以医愚。",
-    author: "刘向",
-    source: "《说苑》",
+    activity: '宜读书',
+    quote: '书犹药也，善读之可以医愚。',
+    author: '刘向',
+    source: '《说苑》',
   }}
 />
 ```
@@ -153,18 +153,18 @@ function App() {
 ```tsx
 const contents = [
   {
-    date: "2025-06-15",
-    activity: "宜读书",
-    quote: "...",
-    author: "...",
-    source: "...",
+    date: '2025-06-15',
+    activity: '宜读书',
+    quote: '...',
+    author: '...',
+    source: '...',
   },
   {
-    date: "2025-06-16",
-    activity: "宜散步",
-    quote: "...",
-    author: "...",
-    source: "...",
+    date: '2025-06-16',
+    activity: '宜散步',
+    quote: '...',
+    author: '...',
+    source: '...',
   },
 ];
 
@@ -178,8 +178,8 @@ const contents = [
 /** 辅助函数：将 Date 格式化为本地日期字符串 YYYY-MM-DD */
 function toLocalDateString(date: Date): string {
   const y = date.getFullYear();
-  const m = String(date.getMonth() + 1).padStart(2, "0");
-  const d = String(date.getDate()).padStart(2, "0");
+  const m = String(date.getMonth() + 1).padStart(2, '0');
+  const d = String(date.getDate()).padStart(2, '0');
   return `${y}-${m}-${d}`;
 }
 
