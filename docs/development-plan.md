@@ -36,17 +36,17 @@
 - [x] 创建 `src/index.ts` 统一导出入口（只导出 Calendar + getLunarInfo + 类型）
 - [x] 创建 `src/types.ts` 新版类型定义（CalendarProps、CalendarContent 含 date 字段等）
 - [x] 创建 `src/components/Calendar.tsx` 主组件骨架（先包裹现有 CalendarSVG，CalendarSVG 不对外导出）
-- [ ] 创建 `demo/` 目录，移入演示相关文件：
-  - [ ] `demo/index.html`
-  - [ ] `demo/main.tsx`
-  - [ ] `demo/DemoApp.tsx`（原 App.tsx 改造）
-- [ ] 创建 `vite.demo.config.ts`（以 `demo/index.html` 为入口的独立 Vite 配置，仅供本地开发使用）
-- [ ] 修改 `vite.config.ts` → Vite Library Mode（仅用于 `pnpm build` 构建库产物），并在 `build.rollupOptions.external` 中显式排除 `react` 和 `react-dom`（含 `react/jsx-runtime`），确保库产物不捆绑 React
-- [ ] 在 `package.json` 中添加 `dev:demo` 脚本：`vite --config vite.demo.config.ts`
-- [ ] 修改 `package.json`：
-  - 添加 `main`、`module`、`types`、`exports`（含 `./style.css` 子路径导出）、`files` 字段
-  - 将 `react` 和 `react-dom` 从 `dependencies` **移到** `peerDependencies`（不能同时保留在 dependencies 中，否则消费者会出现 React 实例重复）
-  - 添加 `peerDependencies` 版本约束：`"react": "^18.0.0 || ^19.0.0"`、`"react-dom": "^18.0.0 || ^19.0.0"`
+- [x] 创建 `demo/` 目录，移入演示相关文件：
+  - [x] `demo/index.html`
+  - [x] `demo/main.tsx`
+  - [x] `demo/DemoApp.tsx`（原 App.tsx 改造）
+- [x] 创建 `vite.demo.config.ts`（以 `demo/index.html` 为入口的独立 Vite 配置，仅供本地开发使用）
+- [x] 修改 `vite.config.ts` → Vite Library Mode（仅用于 `pnpm build` 构建库产物），并在 `build.rollupOptions.external` 中显式排除 `react` 和 `react-dom`（含 `react/jsx-runtime`），确保库产物不捆绑 React
+- [x] 在 `package.json` 中添加 `dev:demo` 脚本：`vite --config vite.demo.config.ts`
+- [x] 修改 `package.json`：
+  - [x] 添加 `main`、`module`、`types`、`exports`（含 `./style.css` 子路径导出）、`files` 字段
+  - [x] 将 `react` 和 `react-dom` 从 `dependencies` **移到** `peerDependencies`（不能同时保留在 dependencies 中，否则消费者会出现 React 实例重复）
+  - [x] 添加 `peerDependencies` 版本约束：`"react": "^18.0.0 || ^19.0.0"`、`"react-dom": "^18.0.0 || ^19.0.0"`
 - [ ] 创建 `tsconfig.build.json`（继承 `tsconfig.json`，覆盖 `noEmit: false`、启用 `declaration`、`emitDeclarationOnly`，`include` 仅指向 `src/`），专用于库声明文件输出；保留 `tsconfig.json` 的 `noEmit: true` 供 demo 开发使用
 - [ ] 修改 `package.json` 构建脚本：`build` 步骤先运行 `tsc -p tsconfig.build.json` 生成 `.d.ts`，再运行 `vite build` 生成 JS/CSS 产物
 - [ ] 配置代码规范工具链：ESLint（flat config + `typescript-eslint` + `eslint-plugin-react-hooks`）+ Prettier（`.prettierrc`），添加 `lint` 和 `format` 脚本到 `package.json`
