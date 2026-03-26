@@ -20,7 +20,7 @@
   "scripts": {
     "dev": "vite",
     "dev:demo": "vite --config vite.demo.config.ts",
-    "build": "pnpm run format && pnpm run lint && vite build && tsc -p tsconfig.build.json",
+    "build": "node -e \"require('node:fs').rmSync('dist', { recursive: true, force: true })\" && pnpm run format && pnpm run lint && tsc -p tsconfig.build.json && vite build",
     "preview": "vite preview",
     "lint": "eslint .",
     "format": "prettier --write \"**/*.{ts,tsx,js,json,md,css}\""

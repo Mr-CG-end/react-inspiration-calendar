@@ -48,15 +48,15 @@
   - [x] 将 `react` 和 `react-dom` 从 `dependencies` **移到** `peerDependencies`（不能同时保留在 dependencies 中，否则消费者会出现 React 实例重复）
   - [x] 添加 `peerDependencies` 版本约束：`"react": "^18.0.0 || ^19.0.0"`、`"react-dom": "^18.0.0 || ^19.0.0"`
 - [x] 创建 `tsconfig.build.json`（继承 `tsconfig.json`，覆盖 `noEmit: false`、启用 `declaration`、`emitDeclarationOnly`，`include` 仅指向 `src/`），专用于库声明文件输出；保留 `tsconfig.json` 的 `noEmit: true` 供 demo 开发使用
-- [x] 修改 `package.json` 构建脚本：`build` 步骤先运行 `tsc -p tsconfig.build.json` 生成 `.d.ts`，再运行 `vite build` 生成 JS/CSS 产物
+- [x] 修改 `package.json` 构建脚本：`build` 步骤先清理 `dist/`，再运行 `tsc -p tsconfig.build.json` 生成 `.d.ts`，最后运行 `vite build` 生成 JS/CSS 产物（避免历史产物残留）
 - [x] 配置代码规范工具链：ESLint（flat config + `typescript-eslint` + `eslint-plugin-react-hooks`）+ Prettier（`.prettierrc`），添加 `lint` 和 `format` 脚本到 `package.json`
 - [x] 确认 `vite.config.ts` Library Mode 的 CSS 输出文件名稳定为 `style.css`（通过 `build.lib.cssFileName` 配置）
 - [x] 验证使用方可通过 `import 'react-inspiration-calendar/style.css'` 正常加载样式
-- [x] 验证 `pnpm build` 构建成功，产物在 `dist/`（含 `.es.js` + `.cjs` + `.d.ts` + `style.css`）
+- [x] 验证 `pnpm build` 构建成功，产物在 `dist/`（含 `index.js` + `index.cjs` + `.d.ts` + `style.css`）
 - [x] 验证构建产物中**不包含 React 实现代码**（产物应仅保留 `import "react"` 等外部引用声明，不应包含 `createElement`、`__SECRET_INTERNALS` 等 React 内部实现；可用 `npx rg "createElement|__SECRET_INTERNALS" dist/` 或打开产物文件人工检查）
 - [x] 验证 `pnpm dev:demo` 演示应用可正常运行
 
-**验收**：`pnpm build` 生成 `.es.js` + `.cjs` + `.d.ts` + `style.css`（不含 UMD），产物不捆绑 React，`pnpm dev:demo` 可跑，`style.css` 子路径导出可用
+**验收**：`pnpm build` 生成 `index.js` + `index.cjs` + `.d.ts` + `style.css`（不含 UMD），产物不捆绑 React，`pnpm dev:demo` 可跑，`style.css` 子路径导出可用
 
 ---
 

@@ -10,11 +10,13 @@ export default defineConfig({
     },
   },
   build: {
+    emptyOutDir: false, // 允许跑两次命令（tsc 和 vite）放在同个目录而不被互删
     // 告诉 Vite：我们不是在打包一个普通的网站，而是在打包一个供别人下载的函数库 (Library)
     lib: {
       entry: path.resolve(__dirname, 'src/index.ts'), // 入口
       name: 'ReactInspirationCalendar',
       fileName: 'index',
+      formats: ['es', 'cjs'], // 强行指定格式，干掉默认的 umd
       cssFileName: 'style', // 显式锁定导出的 CSS 文件名为 style.css
     },
     rollupOptions: {
