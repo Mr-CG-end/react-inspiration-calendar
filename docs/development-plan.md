@@ -35,7 +35,7 @@
 
 - [x] 创建 `src/index.ts` 统一导出入口（只导出 Calendar + getLunarInfo + 类型）
 - [x] 创建 `src/types.ts` 新版类型定义（CalendarProps、CalendarContent 含 date 字段等）
-- [ ] 创建 `src/components/Calendar.tsx` 主组件骨架（先包裹现有 CalendarSVG，CalendarSVG 不对外导出）
+- [x] 创建 `src/components/Calendar.tsx` 主组件骨架（先包裹现有 CalendarSVG，CalendarSVG 不对外导出）
 - [ ] 创建 `demo/` 目录，移入演示相关文件：
   - [ ] `demo/index.html`
   - [ ] `demo/main.tsx`

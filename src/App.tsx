@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import CalendarSVG from "./components/CalendarSVG";
-import { getLunarInfo } from "./utils/lunar";
+import Calendar from "./components/Calendar";
 import { CalendarContent } from "./types";
 import { parseLocalDate, formatLocalDate } from "./utils/dateUtils";
 
@@ -20,8 +19,6 @@ const App: React.FC = () => {
     const newDate = parseLocalDate(e.target.value);
     setDate(newDate);
   };
-
-  const lunar = getLunarInfo(date);
 
   return (
     <div className="min-h-screen bg-stone-100 flex flex-col items-center py-12 px-4">
@@ -50,7 +47,7 @@ const App: React.FC = () => {
       {/* 日历展示区域 */}
       <div className="w-full max-w-lg relative perspective-1000">
         <div className="transition-all duration-700 ease-in-out hover:scale-[1.02]">
-          <CalendarSVG date={date} lunar={lunar} content={fallbackContent} />
+          <Calendar date={date} content={fallbackContent} />
         </div>
       </div>
 

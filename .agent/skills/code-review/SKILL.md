@@ -136,8 +136,13 @@ Check for:
 - unnecessary indirection
 - file growth that hurts readability
 - comments that explain intent where the logic is non-obvious
+- avoidable drift from the project's arrow-function convention for components and helpers
 
 Treat file length, prop placement, and naming conventions as heuristics, not automatic failures.
+
+Project style default:
+
+- prefer arrow functions consistently unless a local exception has a concrete technical reason
 
 ### 8. Documentation and Tests
 

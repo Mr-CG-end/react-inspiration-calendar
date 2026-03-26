@@ -71,12 +71,32 @@ Avoid:
 
 If you must use `any` or `as`, keep the scope narrow and leave a short comment when the reason is not obvious.
 
+## Function Style
+
+Project default:
+
+- use arrow functions consistently for React components, utility functions, and local helpers
+
+Prefer:
+
+- `const Component = () => {}`
+- `const helper = () => {}`
+- explicit return types on exported arrow functions when they improve readability or API clarity
+
+Avoid:
+
+- mixing arrow functions and `function foo() {}` declarations without a concrete reason
+- introducing declaration-style functions as a matter of personal preference
+
+If a function declaration is genuinely the clearer or safer option, keep the exception narrow and make the reason obvious from context.
+
 ## Components
 
 Project defaults:
 
 - prefer named exports for reusable components
 - prefer plain function components over `React.FC`
+- prefer arrow function components over function declarations
 - destructure props when it improves readability
 - use early returns for major conditional branches
 - return `null` for intentionally non-rendering states such as `visible === false`
