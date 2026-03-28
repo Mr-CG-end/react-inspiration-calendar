@@ -3,9 +3,9 @@
  * @param dateStr 格式为 YYYY-MM-DD 的日期字符串
  * @returns 代表本地该日零点的 Date 对象，如果解析失败返回当前时间
  */
-export function parseLocalDate(dateStr: string): Date {
-  if (!dateStr || typeof dateStr !== 'string') {
-    return new Date();
+export function parseLocalDate(dateStr: string): Date | null {
+  if (!dateStr || typeof dateStr !== 'string' || dateStr.trim() === '') {
+    return null;
   }
 
   const parts = dateStr.split('-');
@@ -16,13 +16,15 @@ export function parseLocalDate(dateStr: string): Date {
 
     // 拦截 NaN 的情况
     if (!isNaN(year) && !isNaN(month) && !isNaN(day)) {
-      // 使用数字参数形式，引擎会强制按本地时区生成时间
-      return new Date(year, month, day);
+      const date = new Date(year, month, day);
+      // 防止 JS 引擎将 2月30日 自动纠转为 3月2日
+      if (date.getFullYear() === year && date.getMonth() === month && date.getDate() === day) {
+        return date;
+      }
     }
   }
 
-  // 格式不对兜底返回当前本地时间
-  return new Date();
+  return null;
 }
 
 /**

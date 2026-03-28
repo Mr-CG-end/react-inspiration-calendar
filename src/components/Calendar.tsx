@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import CalendarSVG from './CalendarSVG';
-import { formatLocalDate } from '../utils/dateUtils';
+import { formatLocalDate, parseLocalDate } from '../utils/dateUtils';
 import { getLunarInfo } from '../utils/lunar';
 import type { CalendarContent, CalendarProps } from '../types';
+
+type AsyncStatus = 'idle' | 'loading' | 'success' | 'error';
 
 const fallbackContent: CalendarContent = {
   activity: '日常',
@@ -11,39 +13,44 @@ const fallbackContent: CalendarContent = {
   source: 'Inspiration Calendar',
 };
 
-const resolveContent = (content: CalendarProps['content'], date: Date): CalendarContent => {
-  if (!content) {
-    return fallbackContent;
-  }
+// 日期比较
+const isSameLocalDate = (dateStr: string, targetDate: Date): boolean => {
+  const parsed = parseLocalDate(dateStr);
+  if (!parsed) return false;
+  return formatLocalDate(parsed) === formatLocalDate(targetDate);
+};
 
-  if (Array.isArray(content)) {
-    if (content.length === 0) {
-      return fallbackContent;
-    }
+// 无日期处理
+const getUndatedContentByDate = (items: CalendarContent[], date: Date): CalendarContent | null => {
+  if (items.length === 0) return null;
 
-    const targetDate = formatLocalDate(date);
-    const matched = content.find((item) => item.date === targetDate);
-    if (matched) {
-      return matched;
-    }
+  // 使用 UTC 绝对时间差来计算天数
+  const utcCurrent = Date.UTC(date.getFullYear(), date.getMonth(), date.getDate());
+  const utcAnchor = Date.UTC(2026, 2, 26);
+  const daysSinceAnchor = Math.floor((utcCurrent - utcAnchor) / 86_400_000);
 
-    const undatedContent = content.filter((item) => !item.date);
-    if (undatedContent.length > 0) {
-      // 使用 UTC 绝对时间差来计算天数，看不懂，但很有用
-      const utcCurrent = Date.UTC(date.getFullYear(), date.getMonth(), date.getDate());
-      const utcAnchor = Date.UTC(2026, 2, 26);
-      const daysSinceAnchor = Math.floor((utcCurrent - utcAnchor) / 86_400_000);
-      // 解决复数循环，可以往回查日期，非常安全嘞
-      const index =
-        ((daysSinceAnchor % undatedContent.length) + undatedContent.length) % undatedContent.length;
+  // 解决负数循环取模问题
+  const index = ((daysSinceAnchor % items.length) + items.length) % items.length;
+  return items[index];
+};
 
-      return undatedContent[index];
-    }
+// 总入口，静态内容解析
+const resolveStaticContent = (
+  // 索引访问类型
+  content: CalendarProps['content'],
+  date: Date,
+): CalendarContent | null => {
+  if (!content) return null;
+  if (!Array.isArray(content)) return content;
+  if (content.length === 0) return null;
 
-    return fallbackContent;
-  }
+  // 精确日期匹配优先
+  const datedMatched = content.find((item) => isSameLocalDate(item.date || '', date));
+  if (datedMatched) return datedMatched;
 
-  return content;
+  // 无日期轮播
+  const undatedContent = content.filter((item) => !item.date);
+  return getUndatedContentByDate(undatedContent, date);
 };
 
 const Calendar: React.FC<CalendarProps> = ({
@@ -51,17 +58,85 @@ const Calendar: React.FC<CalendarProps> = ({
   content,
   visible = true,
   className,
+  fetchContent,
 }) => {
+  // 用今日时间兜底
+  const safeDate = date instanceof Date && !isNaN(date.getTime()) ? date : new Date();
+  // 格式化日期，无视具体时间
+  const dateKey = formatLocalDate(safeDate);
+  // 重建零点对象
+  const normalizedDate = parseLocalDate(dateKey);
+
+  const lunar = getLunarInfo(normalizedDate);
+  const staticContent = resolveStaticContent(content, normalizedDate);
+  const hasContentProp = content !== undefined;
+
+  const [asyncState, setAsyncState] = useState<{
+    status: AsyncStatus;
+    content: CalendarContent | null;
+  }>({
+    status: 'idle',
+    content: null,
+  });
+  const requestIdRef = useRef(0);
+
+  const resolvedContent = hasContentProp
+    ? (staticContent ?? fallbackContent)
+    : (asyncState.content ?? fallbackContent);
+  const isLoading = !hasContentProp && !!fetchContent && asyncState.status === 'loading';
+
+  useEffect(() => {
+    if (!visible) {
+      setAsyncState({ status: 'idle', content: null });
+      return;
+    }
+
+    if (hasContentProp) {
+      setAsyncState({ status: 'idle', content: null });
+      return;
+    }
+
+    if (!fetchContent) {
+      setAsyncState({ status: 'idle', content: null });
+      return;
+    }
+
+    const requestId = ++requestIdRef.current;
+    setAsyncState({ status: 'loading', content: null });
+
+    fetchContent(parseLocalDate(dateKey))
+      .then((result) => {
+        if (requestId !== requestIdRef.current) return;
+        setAsyncState({
+          status: 'success',
+          content: result ?? null,
+        });
+      })
+      .catch(() => {
+        if (requestId !== requestIdRef.current) return;
+        setAsyncState({
+          status: 'error',
+          content: null,
+        });
+      });
+
+    return () => {
+      requestIdRef.current += 1;
+    };
+  }, [dateKey, hasContentProp, fetchContent, visible]);
+
   if (!visible) {
     return null;
   }
 
-  const lunar = getLunarInfo(date);
-  const resolvedContent = resolveContent(content, date);
-
   return (
     <div className={className}>
-      <CalendarSVG date={date} lunar={lunar} content={resolvedContent} />
+      <CalendarSVG
+        date={normalizedDate}
+        lunar={lunar}
+        content={resolvedContent}
+        loading={isLoading}
+      />
     </div>
   );
 };

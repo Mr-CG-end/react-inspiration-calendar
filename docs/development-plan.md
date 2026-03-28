@@ -68,13 +68,13 @@
 
 ### F1：自定义内容数据
 
-- [ ] 实现 `content` prop 单条模式
-- [ ] 实现 `content` prop 数组模式（按 `date` 字段自动匹配当前日期）——**必须使用 `dateUtils.parseLocalDate` 进行日期比较**，禁止直接 `new Date(string)`
-- [ ] 实现 `fetchContent` prop（异步函数方式）——内部日期处理同样使用 `dateUtils`
-- [ ] 实现默认备用内容（当什么都不传或无匹配时）
-- [ ] 处理加载态（fetchContent 异步等待时显示骨架 + spinner）
-- [ ] 处理错误态（失败时降级到备用内容）
-- [ ] 处理竞态（日期快速切换时忽略过期请求的结果，只渲染最新日期的数据）
+- [x] 实现 `content` prop 单条模式
+- [x] 实现 `content` prop 数组模式（按 `date` 字段自动匹配当前日期）——**必须使用 `dateUtils.parseLocalDate` 进行日期比较**，禁止直接 `new Date(string)`
+- [x] 实现 `fetchContent` prop（异步函数方式）——内部日期处理同样使用 `dateUtils`
+- [x] 实现默认备用内容（当什么都不传或无匹配时）
+- [x] 处理加载态（fetchContent 异步等待时显示骨架 + spinner）*已决议：为保持纯净 SVG 体验，取消 Spinner，仅使用骨架呼吸灯动画*
+- [x] 处理错误态（失败时降级到备用内容）
+- [x] 处理竞态（日期快速切换时忽略过期请求的结果，只渲染最新日期的数据）
 
 ### F2：真实农历
 
@@ -84,8 +84,8 @@
 
 ### F4：显隐控制
 
-- [ ] 实现 `visible` prop，默认 `true`
-- [ ] `visible=false` 时返回 `null`（不渲染 DOM）
+- [x] 实现 `visible` prop，默认 `true`
+- [x] `visible=false` 时返回 `null`（不渲染 DOM）
 
 ### 自动化测试
 

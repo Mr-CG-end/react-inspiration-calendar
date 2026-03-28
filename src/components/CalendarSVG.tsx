@@ -5,9 +5,10 @@ interface CalendarSVGProps {
   date: Date;
   lunar: LunarInfo;
   content: CalendarContent;
+  loading: boolean;
 }
 
-const CalendarSVG: React.FC<CalendarSVGProps> = ({ date, lunar, content }) => {
+const CalendarSVG: React.FC<CalendarSVGProps> = ({ date, lunar, content, loading }) => {
   const day = date.getDate().toString();
 
   return (
@@ -61,14 +62,7 @@ const CalendarSVG: React.FC<CalendarSVGProps> = ({ date, lunar, content }) => {
         {day}
       </text>
 
-      {/* 宜/忌活动 */}
-      {content.activity && (
-        <text x="300" y="590" fontSize="48" textAnchor="middle" className="serif-sc font-bold">
-          {content.activity}
-        </text>
-      )}
-
-      {/* 品牌标识区域 */}
+      {/* 品牌标识区域（静态不动） */}
       <g transform="translate(480, 570)">
         <text x="0" y="6" fontSize="14" textAnchor="middle" className="serif-sc font-black">
           灵感日历
@@ -85,18 +79,48 @@ const CalendarSVG: React.FC<CalendarSVGProps> = ({ date, lunar, content }) => {
         </text>
       </g>
 
-      {/* 分隔横线 */}
+      {/* 分隔横线（静态不动） */}
       <line x1="70" y1="650" x2="530" y2="650" stroke="black" strokeWidth="1" />
 
-      {/* 引言区域 */}
-      <foreignObject x="70" y="680" width="460" height="150">
-        <div className="serif-sc text-black text-3xl leading-relaxed">{content.quote}</div>
-      </foreignObject>
+      {loading ? (
+        <g opacity="0.4">
+          <animate
+            attributeName="opacity"
+            values="0.4;0.8;0.4"
+            dur="2s"
+            repeatCount="indefinite"
+          />
+          {/* Activity 骨架 (对应 y=590 的文字) */}
+          <rect x="220" y="550" width="160" height="48" rx="8" fill="#e5e7eb" />
+          
+          {/* Quote 骨架 (对应 y=680 的段落文字，用几条线代替) */}
+          <rect x="70" y="690" width="460" height="24" rx="4" fill="#f3f4f6" />
+          <rect x="70" y="730" width="380" height="24" rx="4" fill="#f3f4f6" />
+          <rect x="70" y="770" width="200" height="24" rx="4" fill="#f3f4f6" />
+          
+          {/* Source & Author 骨架 (对应 y=830) */}
+          <rect x="70" y="815" width="140" height="18" rx="4" fill="#e5e7eb" />
+        </g>
+      ) : (
+        <>
+          {/* 宜/忌活动 */}
+          {content.activity && (
+            <text x="300" y="590" fontSize="48" textAnchor="middle" className="serif-sc font-bold">
+              {content.activity}
+            </text>
+          )}
 
-      {/* 来源信息 */}
-      <text x="70" y="830" fontSize="16" className="serif-sc">
-        {content.source} · {content.author}
-      </text>
+          {/* 引言区域 */}
+          <foreignObject x="70" y="680" width="460" height="150">
+            <div className="serif-sc text-black text-3xl leading-relaxed">{content.quote}</div>
+          </foreignObject>
+
+          {/* 来源信息 */}
+          <text x="70" y="830" fontSize="16" className="serif-sc">
+            {content.source} · {content.author}
+          </text>
+        </>
+      )}
 
       {/* 底部品牌字样 */}
       <text x="300" y="875" fontSize="12" textAnchor="middle" style={{ letterSpacing: '10px' }}>

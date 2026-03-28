@@ -19,7 +19,8 @@ export interface LunarInfo {
 export interface CalendarProps {
   date?: Date;
   content?: CalendarContent | CalendarContent[];
-  fetchContent?: (date: Date) => Promise<CalendarContent>;
+  // 方便降级,就是使用结果的优先级
+  fetchContent?: (date: Date) => Promise<CalendarContent | null | undefined>;
   theme?: 'classic' | 'dark' | 'minimalist';
   visible?: boolean;
   className?: string; // 自定义外层 className
