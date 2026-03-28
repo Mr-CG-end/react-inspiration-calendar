@@ -84,20 +84,14 @@ const CalendarSVG: React.FC<CalendarSVGProps> = ({ date, lunar, content, loading
 
       {loading ? (
         <g opacity="0.4">
-          <animate
-            attributeName="opacity"
-            values="0.4;0.8;0.4"
-            dur="2s"
-            repeatCount="indefinite"
-          />
+          <animate attributeName="opacity" values="0.4;0.8;0.4" dur="2s" repeatCount="indefinite" />
           {/* Activity 骨架 (对应 y=590 的文字) */}
           <rect x="220" y="550" width="160" height="48" rx="8" fill="#e5e7eb" />
-          
+
           {/* Quote 骨架 (对应 y=680 的段落文字，用几条线代替) */}
           <rect x="70" y="690" width="460" height="24" rx="4" fill="#f3f4f6" />
           <rect x="70" y="730" width="380" height="24" rx="4" fill="#f3f4f6" />
-          <rect x="70" y="770" width="200" height="24" rx="4" fill="#f3f4f6" />
-          
+
           {/* Source & Author 骨架 (对应 y=830) */}
           <rect x="70" y="815" width="140" height="18" rx="4" fill="#e5e7eb" />
         </g>

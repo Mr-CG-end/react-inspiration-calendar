@@ -78,7 +78,7 @@
 
 ### F2：真实农历
 
-- [ ] 安装 `lunar-javascript`
+- [x] 安装 `lunar-javascript`
 - [ ] 改造 `utils/lunar.ts`，返回真实农历月/日
 - [ ] 在 demo 中验证不同日期的农历正确性
 

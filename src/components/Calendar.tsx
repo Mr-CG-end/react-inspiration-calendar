@@ -9,7 +9,7 @@ type AsyncStatus = 'idle' | 'loading' | 'success' | 'error';
 const fallbackContent: CalendarContent = {
   activity: '日常',
   quote: '今天没有特别的安排，好好享受当下的宁静吧。',
-  author: '辰同学',
+  author: 'Coder Chen',
   source: 'Inspiration Calendar',
 };
 
