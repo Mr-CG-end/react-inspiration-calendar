@@ -1,0 +1,19 @@
+/* Minimalist 主题：浅米色背景，极简排版，大量留白 */
+.calendar {
+  display: block;
+  width: 100%;
+  height: auto;
+  background-color: #f8f6f0; /* 更加纯净温馨的本白色 */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  border: none;
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.quoteText {
+  color: #3a3532;
+  font-family: 'Playfair Display', Georgia, Baskerville, 'Noto Serif SC', 'Songti SC', serif;
+  font-size: 1.125rem;
+  line-height: 2;
+  text-align: center;
+}

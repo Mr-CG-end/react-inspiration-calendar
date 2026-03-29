@@ -8,7 +8,6 @@ react-inspiration-calendar/
 │   ├── index.ts                  # 统一导出入口（只导出 Calendar + 工具 + 类型）
 │   ├── components/
 │   │   ├── Calendar.tsx          # 主组件（数据管理 + 调度）
-│   │   ├── CalendarSVG.tsx       # SVG 渲染（内部组件，不对外导出）
 │   │   └── themes/
 │   │       ├── ClassicCalendar.tsx   # classic 主题渲染
 │   │       ├── DarkCalendar.tsx      # dark 主题渲染
@@ -53,13 +52,9 @@ Props 输入 → 日期处理 → 内容解析（按 date 匹配 / 异步获取�
 
 职责：接收标准化的数据，负责具体的 SVG 渲染。所有主题统一使用 SVG（viewBox 600×900）进行渲染，不使用 DOM 方案。
 
-**来源**：从现有的 `CalendarSVG.tsx` 改造而来。
+### `themes/index.ts` — 主题注册表
 
-### `themes/index.ts` — 主题注册表（P3 实现）
-
-职责：维护主题名称到组件的映射，便于扩展。
-
-> **注意**：P1/P2 阶段暂硬编码 classic 主题渲染，不引入注册表。注册表在 P3 统一实现。
+职责：维护主题名称到组件的映射，便于扩展。传入非法 `theme` 值时自动降级到 `classic`。
 
 ```typescript
 const themes = {
@@ -228,14 +223,9 @@ demo ───────► src/index.ts
 - 构建时自动生成唯一类名，不污染宿主应用
 - Vite 原生支持，无需额外配置
 
-### 从 Tailwind 迁移（P3 阶段执行）
+### Tailwind 迁移（已完成）
 
-当前代码中的 Tailwind 类名将被替换为 CSS Modules：
-
-```
-Tailwind:     className="min-h-screen bg-stone-100 flex"
-CSS Modules:  className={styles.container}
-```
+所有 Tailwind 类名已替换为 CSS Modules，`tailwind.config.js` 和 `postcss.config.js` 已删除。
 
 SVG 内部的样式保持内联（SVG 元素不受 CSS Modules 限制）。
 
@@ -256,7 +246,7 @@ interface ThemeComponentProps {
   date: Date;
   lunar: LunarInfo;
   content: CalendarContent; // 已解析好的单条内容
-  className?: string;
+  loading: boolean; // 是否处于异步加载中
 }
 ```
 

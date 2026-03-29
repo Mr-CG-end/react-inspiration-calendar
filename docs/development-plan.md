@@ -113,24 +113,24 @@
 
 ### 主题注册表
 
-- [ ] 创建 `src/components/themes/` 目录和 `index.ts` 注册表
-- [ ] 将 P1/P2 中硬编码的 classic 渲染迁移到注册表驱动
-- [ ] 实现 `theme` prop 切换（`'classic' | 'dark' | 'minimalist'`）
+- [x] 创建 `src/components/themes/` 目录和 `index.ts` 注册表
+- [x] 将 P1/P2 中硬编码的 classic 渲染迁移到注册表驱动
+- [x] 实现 `theme` prop 切换（`'classic' | 'dark' | 'minimalist'`）
 
 ### Classic 主题
 
-- [ ] 创建 `styles/classic.module.css`
-- [ ] 创建 `themes/ClassicCalendar.tsx`（从现有 CalendarSVG 改造）
+- [x] 创建 `styles/classic.module.css`
+- [x] 创建 `themes/ClassicCalendar.tsx`（从现有 CalendarSVG 改造）
 
 ### Dark 主题
 
-- [ ] 创建 `styles/dark.module.css`（深色背景 #1a1a1a + 金色字体）
-- [ ] 创建 `themes/DarkCalendar.tsx`（参考 Stitch 设计稿）
+- [x] 创建 `styles/dark.module.css`（深色背景 #1a1a1a + 金色字体）
+- [x] 创建 `themes/DarkCalendar.tsx`（参考 Stitch 设计稿）
 
 ### Minimalist 主题
 
-- [ ] 创建 `styles/minimalist.module.css`（浅米色背景 + 极简排版）
-- [ ] 创建 `themes/MinimalistCalendar.tsx`（参考 Stitch 设计稿）
+- [x] 创建 `styles/minimalist.module.css`（浅米色背景 + 极简排版）
+- [x] 创建 `themes/MinimalistCalendar.tsx`（参考 Stitch 设计稿）
 
 **验收**：三种主题均可通过 `theme` prop 切换、符合 `theme-styles.md` 的色彩/字体/布局规范、Tailwind 完全移除
 
@@ -140,8 +140,8 @@
 
 **目标**：确保包可用，完善文档
 
-- [ ] 移除 `package.json` 中的 `"private": true`（否则 `npm publish` 会被阻止）
-- [ ] 确认 `package.json` 发布元数据完整：`name`、`version`（非占位 0.0.0）、`license`、`repository`、`description`、`keywords`
+- [x] 移除 `package.json` 中的 `"private": true`（否则 `npm publish` 会被阻止）
+- [x] 确认 `package.json` 发布元数据完整：`name`、`version`（非占位 0.0.0）、`license`、`repository`、`description`、`keywords`
 - [ ] 更新 `README.md`（安装、使用示例、API 文档、主题说明）
 - [ ] 添加 `LICENSE` 文件
 - [ ] 确认 `.gitignore` 和 `package.json` 的 `files` 字段正确（只发布 `dist/`）

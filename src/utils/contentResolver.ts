@@ -10,7 +10,10 @@ export function isSameLocalDate(dateStr: string, targetDate: Date): boolean {
   return formatLocalDate(parsed) === formatLocalDate(targetDate);
 }
 
-export function getUndatedContentByDate(items: CalendarContent[], date: Date): CalendarContent | null {
+export function getUndatedContentByDate(
+  items: CalendarContent[],
+  date: Date,
+): CalendarContent | null {
   if (items.length === 0) return null;
 
   const utcCurrent = Date.UTC(date.getFullYear(), date.getMonth(), date.getDate());

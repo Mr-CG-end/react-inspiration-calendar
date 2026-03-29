@@ -1,23 +1,12 @@
 import React from 'react';
-import { CalendarContent, LunarInfo } from '../types';
-import styles from '../styles/base.module.css';
+import { ThemeComponentProps } from '../../types';
+import styles from '../../styles/classic.module.css';
 
-interface CalendarSVGProps {
-  date: Date;
-  lunar: LunarInfo;
-  content: CalendarContent;
-  loading: boolean;
-}
-
-const CalendarSVG: React.FC<CalendarSVGProps> = ({ date, lunar, content, loading }) => {
+const ClassicCalendar: React.FC<ThemeComponentProps> = ({ date, lunar, content, loading }) => {
   const day = date.getDate().toString();
 
   return (
-    <svg
-      viewBox="0 0 600 900"
-      className={styles.calendar}
-      xmlns="http://www.w3.org/2000/svg"
-    >
+    <svg viewBox="0 0 600 900" className={styles.calendar} xmlns="http://www.w3.org/2000/svg">
       <defs>
         <path id="topArc" d="M -45,0 A 45,45 0 0,1 45,0" />
         <path id="bottomArc" d="M -45,0 A 45,45 0 0,0 45,0" />
@@ -40,14 +29,33 @@ const CalendarSVG: React.FC<CalendarSVGProps> = ({ date, lunar, content, loading
       <line x1="70" y1="130" x2="530" y2="130" stroke="black" strokeWidth="1" />
 
       {/* 顶部信息区域 */}
-      <text x="70" y="105" fontSize="24" className={`serif-sc ${styles.fontBold}`}>
+      <text
+        x="70"
+        y="105"
+        fontSize="24"
+        fontFamily="'Noto Serif SC', 'Songti SC', serif"
+        fontWeight="700"
+      >
         {lunar.monthInWords}
       </text>
-      <text x="300" y="105" fontSize="16" textAnchor="middle" className="serif-sc">
+      <text
+        x="300"
+        y="105"
+        fontSize="16"
+        textAnchor="middle"
+        fontFamily="'Noto Serif SC', 'Songti SC', serif"
+      >
         农历{lunar.lunarMonth}
         {lunar.lunarDay}
       </text>
-      <text x="530" y="105" fontSize="24" textAnchor="end" className={`serif-sc ${styles.fontBold}`}>
+      <text
+        x="530"
+        y="105"
+        fontSize="24"
+        textAnchor="end"
+        fontFamily="'Noto Serif SC', 'Songti SC', serif"
+        fontWeight="700"
+      >
         {lunar.weekday}
       </text>
 
@@ -57,7 +65,8 @@ const CalendarSVG: React.FC<CalendarSVGProps> = ({ date, lunar, content, loading
         y="450"
         fontSize="320"
         textAnchor="middle"
-        className={`serif-sc ${styles.fontBlack}`}
+        fontFamily="'Noto Serif SC', 'Songti SC', serif"
+        fontWeight="900"
         style={{ letterSpacing: '-10px' }}
       >
         {day}
@@ -65,7 +74,14 @@ const CalendarSVG: React.FC<CalendarSVGProps> = ({ date, lunar, content, loading
 
       {/* 品牌标识区域（静态不动） */}
       <g transform="translate(480, 570)">
-        <text x="0" y="6" fontSize="14" textAnchor="middle" className={`serif-sc ${styles.fontBlack}`}>
+        <text
+          x="0"
+          y="6"
+          fontSize="14"
+          textAnchor="middle"
+          fontFamily="'Noto Serif SC', 'Songti SC', serif"
+          fontWeight="900"
+        >
           灵感日历
         </text>
         <text fontSize="7" fontWeight="bold">
@@ -86,32 +102,34 @@ const CalendarSVG: React.FC<CalendarSVGProps> = ({ date, lunar, content, loading
       {loading ? (
         <g opacity="0.4">
           <animate attributeName="opacity" values="0.4;0.8;0.4" dur="2s" repeatCount="indefinite" />
-          {/* Activity 骨架 (对应 y=590 的文字) */}
           <rect x="220" y="550" width="160" height="48" rx="8" fill="#e5e7eb" />
-
-          {/* Quote 骨架 (对应 y=680 的段落文字，用几条线代替) */}
           <rect x="70" y="690" width="460" height="24" rx="4" fill="#f3f4f6" />
           <rect x="70" y="730" width="380" height="24" rx="4" fill="#f3f4f6" />
-
-          {/* Source & Author 骨架 (对应 y=830) */}
           <rect x="70" y="815" width="140" height="18" rx="4" fill="#e5e7eb" />
         </g>
       ) : (
         <>
           {/* 宜/忌活动 */}
           {content.activity && (
-            <text x="300" y="590" fontSize="48" textAnchor="middle" className={`serif-sc ${styles.fontBold}`}>
+            <text
+              x="300"
+              y="590"
+              fontSize="48"
+              textAnchor="middle"
+              fontFamily="'Noto Serif SC', 'Songti SC', serif"
+              fontWeight="700"
+            >
               {content.activity}
             </text>
           )}
 
           {/* 引言区域 */}
           <foreignObject x="70" y="680" width="460" height="150">
-            <div className={`serif-sc ${styles.quoteText}`}>{content.quote}</div>
+            <div className={styles.quoteText}>{content.quote}</div>
           </foreignObject>
 
           {/* 来源信息 */}
-          <text x="70" y="830" fontSize="16" className="serif-sc">
+          <text x="70" y="830" fontSize="16" fontFamily="'Noto Serif SC', 'Songti SC', serif">
             {content.source} · {content.author}
           </text>
         </>
@@ -125,4 +143,4 @@ const CalendarSVG: React.FC<CalendarSVGProps> = ({ date, lunar, content, loading
   );
 };
 
-export default CalendarSVG;
+export default ClassicCalendar;

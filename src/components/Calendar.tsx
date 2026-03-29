@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import CalendarSVG from './CalendarSVG';
+import { themeRegistry } from './themes';
 import { formatLocalDate, parseLocalDate } from '../utils/dateUtils';
 import { getLunarInfo } from '../utils/lunar';
 import { resolveStaticContent } from '../utils/contentResolver';
@@ -21,6 +21,7 @@ const Calendar: React.FC<CalendarProps> = ({
   visible = true,
   className,
   fetchContent,
+  theme = 'classic',
 }) => {
   const rootClassName = [styles.wrapper, className].filter(Boolean).join(' ');
   const safeDate = date instanceof Date && !isNaN(date.getTime()) ? date : new Date();
@@ -88,9 +89,12 @@ const Calendar: React.FC<CalendarProps> = ({
     return null;
   }
 
+  // 从注册表中取出对应主题组件，非法 theme 值降级到 classic
+  const ThemeComponent = themeRegistry[theme] ?? themeRegistry.classic;
+
   return (
     <div className={rootClassName}>
-      <CalendarSVG
+      <ThemeComponent
         date={normalizedDate}
         lunar={lunar}
         content={resolvedContent}

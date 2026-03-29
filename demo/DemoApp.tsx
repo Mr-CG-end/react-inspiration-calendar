@@ -14,6 +14,7 @@ type DataMode =
   | 'mock-race'
   | 'mixed-content-fetch';
 
+type ThemeName = 'classic' | 'dark' | 'minimalist';
 type RequestPhase = 'start' | 'resolve' | 'reject';
 type SideTab = 'debug' | 'lunar';
 
@@ -146,12 +147,19 @@ const sideTabs: Array<[SideTab, string]> = [
   ['lunar', '农历校验'],
 ];
 
+const themeButtons: Array<[ThemeName, string]> = [
+  ['classic', '经典'],
+  ['dark', '暗黑'],
+  ['minimalist', '极简'],
+];
+
 const DemoApp: React.FC = () => {
   const [date, setDate] = useState<Date>(new Date());
   const [dataMode, setDataMode] = useState<DataMode>('static');
   const [requestLogs, setRequestLogs] = useState<RequestLogEntry[]>([]);
   const [visible, setVisible] = useState<boolean>(true);
   const [sideTab, setSideTab] = useState<SideTab>('debug');
+  const [theme, setTheme] = useState<ThemeName>('classic');
 
   const appendLog = useCallback(
     (mode: DataMode, dateValue: Date, phase: RequestPhase, note: string) => {
@@ -268,9 +276,7 @@ const DemoApp: React.FC = () => {
   return (
     <div className={styles.pageContainer}>
       <div className={styles.headerCard}>
-        <h1 className={styles.title}>
-          灵感日历 · Inspiration Calendar
-        </h1>
+        <h1 className={styles.title}>灵感日历 · Inspiration Calendar</h1>
 
         <div className={styles.inputGroup}>
           <label htmlFor="date" className={styles.label}>
@@ -308,6 +314,22 @@ const DemoApp: React.FC = () => {
             <div className={styles.panelBody}>
               {sideTab === 'debug' ? (
                 <>
+                  <div className={styles.sectionRow}>
+                    <span className={styles.sectionTitle}>主题切换 (theme)</span>
+                    <div className={styles.buttonRow}>
+                      {themeButtons.map(([t, label]) => (
+                        <button
+                          key={t}
+                          type="button"
+                          onClick={() => setTheme(t)}
+                          className={`${styles.btnBase} ${theme === t ? styles.btnActive : styles.btnLight}`}
+                        >
+                          {label}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
                   <div className={styles.sectionRow}>
                     <span className={styles.sectionTitle}>可见状态 (visible)</span>
                     <button
@@ -395,11 +417,24 @@ const DemoApp: React.FC = () => {
 
                     <div className={styles.logContainer}>
                       {visibleLogs.length === 0 ? (
-                        <p style={{ opacity: 0.5, textAlign: 'center', fontStyle: 'italic', marginTop: '0.5rem' }}>No request logs</p>
+                        <p
+                          style={{
+                            opacity: 0.5,
+                            textAlign: 'center',
+                            fontStyle: 'italic',
+                            marginTop: '0.5rem',
+                          }}
+                        >
+                          No request logs
+                        </p>
                       ) : (
                         visibleLogs.map((entry) => (
                           <div key={entry.id} className={styles.logEntry}>
-                            <span className={entry.phase === 'reject' ? styles.logTagError : styles.logTagSuccess}>
+                            <span
+                              className={
+                                entry.phase === 'reject' ? styles.logTagError : styles.logTagSuccess
+                              }
+                            >
                               [{entry.phase}]
                             </span>
                             <span className={styles.logDate}>{entry.date.slice(5)}</span>
@@ -415,7 +450,9 @@ const DemoApp: React.FC = () => {
                   <div className={styles.sectionRow}>
                     <div>
                       <h3 className={styles.sectionTitle}>关键日期对照</h3>
-                      <p className={styles.sectionDesc}>通过春节、闰月和跨年样例快速验证农历结果。</p>
+                      <p className={styles.sectionDesc}>
+                        通过春节、闰月和跨年样例快速验证农历结果。
+                      </p>
                     </div>
                     <div className={styles.buttonRow}>
                       <button
@@ -478,12 +515,16 @@ const DemoApp: React.FC = () => {
                       <>
                         <div className={styles.vRow}>
                           <span className={styles.vLabel}>命中样例</span>
-                          <span className={styles.vValue}>{matchedLunarCase.label} ({matchedLunarCase.date})</span>
+                          <span className={styles.vValue}>
+                            {matchedLunarCase.label} ({matchedLunarCase.date})
+                          </span>
                         </div>
                         <div className={styles.vRow}>
                           <span className={styles.vLabel}>预期值</span>
-                          <span className={styles.vValue} style={{textAlign: 'right'}}>
-                            {matchedLunarCase.expected.lunarMonth}{matchedLunarCase.expected.lunarDay} / {matchedLunarCase.expected.weekday}
+                          <span className={styles.vValue} style={{ textAlign: 'right' }}>
+                            {matchedLunarCase.expected.lunarMonth}
+                            {matchedLunarCase.expected.lunarDay} /{' '}
+                            {matchedLunarCase.expected.weekday}
                           </span>
                         </div>
                         <div className={styles.vRow}>
@@ -494,7 +535,9 @@ const DemoApp: React.FC = () => {
                         </div>
                       </>
                     ) : (
-                      <p className={styles.sectionDesc}>当前日期没有预置对照样例。点击上方关键日期按钮，可以验证春节、闰月和跨年边界。</p>
+                      <p className={styles.sectionDesc}>
+                        当前日期没有预置对照样例。点击上方关键日期按钮，可以验证春节、闰月和跨年边界。
+                      </p>
                     )}
                   </div>
                 </>
@@ -505,7 +548,13 @@ const DemoApp: React.FC = () => {
 
         <div className={styles.previewWrap}>
           <div className={styles.previewScaler}>
-            <Calendar date={date} visible={visible} className={styles.calendarOverride} {...calendarProps} />
+            <Calendar
+              date={date}
+              visible={visible}
+              theme={theme}
+              className={styles.calendarOverride}
+              {...calendarProps}
+            />
           </div>
         </div>
 

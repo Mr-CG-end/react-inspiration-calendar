@@ -1,7 +1,21 @@
 {
   "name": "react-inspiration-calendar",
-  "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
+  "description": "A high-fidelity React calendar component featuring lunar dates, cultural quotes, and multi-theme aesthetic designs.",
+  "keywords": [
+    "react",
+    "calendar",
+    "lunar",
+    "component",
+    "typescript",
+    "ui"
+  ],
+  "author": "",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/your-username/react-inspiration-calendar.git"
+  },
   "type": "module",
   "main": "dist/index.cjs",
   "module": "dist/index.js",

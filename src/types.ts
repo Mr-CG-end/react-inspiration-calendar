@@ -25,3 +25,11 @@ export interface CalendarProps {
   visible?: boolean;
   className?: string; // 自定义外层 className
 }
+
+/** 主题组件公共 Props（所有主题接收相同数据，仅视觉不同） */
+export interface ThemeComponentProps {
+  date: Date;
+  lunar: LunarInfo;
+  content: CalendarContent;
+  loading: boolean;
+}
