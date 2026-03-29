@@ -14,7 +14,7 @@ const CalendarSVG: React.FC<CalendarSVGProps> = ({ date, lunar, content, loading
   return (
     <svg
       viewBox="0 0 600 900"
-      className="w-full h-auto bg-white shadow-2xl border border-gray-100 rounded-2xl overflow-hidden"
+      className="block w-full h-auto bg-white shadow-2xl border border-gray-100 rounded-2xl overflow-hidden"
       xmlns="http://www.w3.org/2000/svg"
     >
       <defs>

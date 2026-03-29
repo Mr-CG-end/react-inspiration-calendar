@@ -1,10 +1,8 @@
-/**
- * 简化的农历数据助手。
- * 注意：在生产环境中，请使用 lunar-javascript 等库。
- * 本演示仅为展示美观，提供了固定日期的映射。
- */
+import { Solar } from 'lunar-javascript';
+import type { LunarInfo } from '../types';
+import { formatLocalDate, parseLocalDate } from './dateUtils.ts';
 
-const MONTHS_CN = [
+const GREGORIAN_MONTHS_CN = [
   '一月',
   '二月',
   '三月',
@@ -18,18 +16,43 @@ const MONTHS_CN = [
   '十一月',
   '十二月',
 ];
+
 const WEEKDAYS_CN = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'];
 
-export const getLunarInfo = (date: Date) => {
-  const month = date.getMonth();
-  const weekday = date.getDay();
+const lunarInfoCache = new Map<string, LunarInfo>();
 
-  // 为美观起见，我们在此模拟特定的农历日期字符串
-  // 在实际应用中，请使用：solar.getLunar()
-  return {
-    monthInWords: MONTHS_CN[month],
-    weekday: WEEKDAYS_CN[weekday],
-    lunarMonth: '腊月', // 模拟数据
-    lunarDay: '初三', // 模拟数据
+function normalizeLocalDate(date: Date): Date {
+  if (!(date instanceof Date) || Number.isNaN(date.getTime())) {
+    return new Date();
+  }
+
+  const dateKey = formatLocalDate(date);
+  return parseLocalDate(dateKey) ?? new Date();
+}
+
+export function getLunarInfo(date: Date): LunarInfo {
+  const normalizedDate = normalizeLocalDate(date);
+  const cacheKey = formatLocalDate(normalizedDate);
+  const cached = lunarInfoCache.get(cacheKey);
+
+  if (cached) {
+    return cached;
+  }
+
+  const solar = Solar.fromYmd(
+    normalizedDate.getFullYear(),
+    normalizedDate.getMonth() + 1,
+    normalizedDate.getDate(),
+  );
+  const lunar = solar.getLunar();
+
+  const result: LunarInfo = {
+    monthInWords: GREGORIAN_MONTHS_CN[normalizedDate.getMonth()],
+    weekday: WEEKDAYS_CN[normalizedDate.getDay()],
+    lunarMonth: `${lunar.getMonthInChinese()}月`,
+    lunarDay: lunar.getDayInChinese(),
   };
-};
+
+  lunarInfoCache.set(cacheKey, result);
+  return result;
+}

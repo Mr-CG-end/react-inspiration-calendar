@@ -63,6 +63,7 @@ interface CalendarProps {
   /**
    * 自定义 CSS 类名，应用到最外层容器
    */
+  // 可传入任意样式，覆盖默认的自适应样式，响应式宽度，最大宽度24rem
   className?: string;
 }
 ```
@@ -111,14 +112,16 @@ interface LunarInfo {
 
 ## 异步数据行为契约
 
-当使用 `fetchContent` 时，组件的行为如下：
+当使用 `fetchContent` 时，组件针对网络请求及特殊场景的响应行为如下：
 
-| 状态             | 渲染行为                                                 |
-| ---------------- | -------------------------------------------------------- |
-| **加载中**       | 显示日历骨架 + 加载指示器（spinner），日期和农历正常显示 |
-| **成功**         | 正常渲染内容                                             |
-| **失败**         | 显示默认备用内容，不抛异常                               |
-| **日期快速切换** | 忽略过期请求的结果（竞态处理），只渲染最新日期的数据     |
+| 请求状态   | 渲染行为                                                 |
+| ---------- | -------------------------------------------------------- |
+| **加载中** | 显示日历骨架（带呼吸动画），原有的日期和农历信息正常显示 |
+| **成功**   | 正常渲染接口返回的内容                                   |
+| **失败**   | 降级显示默认的备用内容（不抛异常阻塞渲染）               |
+
+**【并发请求控制（竞态处理）】**
+当发生**日期快速切换**时：组件内部会基于闭包的请求 ID 进行校验，自动忽略过期的旧请求结果，确保仅渲染最后一次最新日期请求的数据，防止内容与日期对不上。
 
 ---
 
@@ -207,8 +210,67 @@ async function getContent(date: Date): Promise<CalendarContent> {
 
 ## 工具函数：`getLunarInfo(date)`
 
-独立导出，用户可单独使用。
+独立导出，用户可单独使用。基于 `lunar-javascript` 库，将公历日期转换为农历信息，并包含星期和公历月份的中文描述。
+
+### 函数签名
 
 ```typescript
 function getLunarInfo(date: Date): LunarInfo;
+```
+
+### 参数
+
+| 参数   | 类型   | 说明                                                                                                       |
+| ------ | ------ | ---------------------------------------------------------------------------------------------------------- |
+| `date` | `Date` | 要查询的日期。传入无效日期时，自动降级为当天。内部会将时间归零（取本地日期的零点），避免时区偏移影响结果。 |
+
+### 返回值
+
+返回一个 `LunarInfo` 对象，字段如下：
+
+| 字段           | 类型     | 示例值     | 说明                 |
+| -------------- | -------- | ---------- | -------------------- |
+| `monthInWords` | `string` | `'三月'`   | 公历月份的中文名称   |
+| `weekday`      | `string` | `'星期六'` | 星期的中文名称       |
+| `lunarMonth`   | `string` | `'二月'`   | 农历月份（含"月"字） |
+| `lunarDay`     | `string` | `'初三'`   | 农历日期             |
+
+### 注意事项
+
+- **本地时区**：函数内部统一基于本地日期（`getFullYear/getMonth/getDate`）计算，不受 UTC 偏移影响。
+- **结果缓存**：相同日期的计算结果会被缓存，重复调用无性能损耗。
+- **无效日期兜底**：传入 `NaN`、非 `Date` 对象等无效值时，自动回退到当天日期，不抛异常。
+
+### 使用示例
+
+```typescript
+import { getLunarInfo } from 'react-inspiration-calendar';
+
+// 查询今天的农历信息
+const info = getLunarInfo(new Date());
+console.log(info.lunarMonth); // 例如：'二月'
+console.log(info.lunarDay); // 例如：'初三'
+console.log(info.weekday); // 例如：'星期六'
+console.log(info.monthInWords); // 例如：'三月'
+
+// 查询指定日期
+// ✅ 推荐：使用 new Date(year, monthIndex, day) 构造本地日期
+const specificDate = new Date(2025, 5, 15); // 2025 年 6 月 15 日
+const specificInfo = getLunarInfo(specificDate);
+console.log(`${specificInfo.lunarMonth}${specificInfo.lunarDay}`); // 例如：'五月廿一'
+```
+
+```tsx
+// 在 React 组件中独立使用
+import { getLunarInfo } from 'react-inspiration-calendar';
+
+function LunarBadge({ date }: { date: Date }) {
+  const { lunarMonth, lunarDay } = getLunarInfo(date);
+  return (
+    <span>
+      {lunarMonth}
+      {lunarDay}
+    </span>
+  );
+}
 ```

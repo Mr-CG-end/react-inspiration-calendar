@@ -60,6 +60,7 @@ const Calendar: React.FC<CalendarProps> = ({
   className,
   fetchContent,
 }) => {
+  const rootClassName = ['w-full max-w-[24rem]', className].filter(Boolean).join(' ');
   // 用今日时间兜底
   const safeDate = date instanceof Date && !isNaN(date.getTime()) ? date : new Date();
   // 格式化日期，无视具体时间
@@ -130,7 +131,7 @@ const Calendar: React.FC<CalendarProps> = ({
   }
 
   return (
-    <div className={className}>
+    <div className={rootClassName}>
       <CalendarSVG
         date={normalizedDate}
         lunar={lunar}
