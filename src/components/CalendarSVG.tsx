@@ -1,5 +1,6 @@
 import React from 'react';
 import { CalendarContent, LunarInfo } from '../types';
+import styles from '../styles/base.module.css';
 
 interface CalendarSVGProps {
   date: Date;
@@ -14,7 +15,7 @@ const CalendarSVG: React.FC<CalendarSVGProps> = ({ date, lunar, content, loading
   return (
     <svg
       viewBox="0 0 600 900"
-      className="block w-full h-auto bg-white shadow-2xl border border-gray-100 rounded-2xl overflow-hidden"
+      className={styles.calendar}
       xmlns="http://www.w3.org/2000/svg"
     >
       <defs>
@@ -39,14 +40,14 @@ const CalendarSVG: React.FC<CalendarSVGProps> = ({ date, lunar, content, loading
       <line x1="70" y1="130" x2="530" y2="130" stroke="black" strokeWidth="1" />
 
       {/* 顶部信息区域 */}
-      <text x="70" y="105" fontSize="24" className="serif-sc font-bold">
+      <text x="70" y="105" fontSize="24" className={`serif-sc ${styles.fontBold}`}>
         {lunar.monthInWords}
       </text>
       <text x="300" y="105" fontSize="16" textAnchor="middle" className="serif-sc">
         农历{lunar.lunarMonth}
         {lunar.lunarDay}
       </text>
-      <text x="530" y="105" fontSize="24" textAnchor="end" className="serif-sc font-bold">
+      <text x="530" y="105" fontSize="24" textAnchor="end" className={`serif-sc ${styles.fontBold}`}>
         {lunar.weekday}
       </text>
 
@@ -56,7 +57,7 @@ const CalendarSVG: React.FC<CalendarSVGProps> = ({ date, lunar, content, loading
         y="450"
         fontSize="320"
         textAnchor="middle"
-        className="serif-sc font-black"
+        className={`serif-sc ${styles.fontBlack}`}
         style={{ letterSpacing: '-10px' }}
       >
         {day}
@@ -64,7 +65,7 @@ const CalendarSVG: React.FC<CalendarSVGProps> = ({ date, lunar, content, loading
 
       {/* 品牌标识区域（静态不动） */}
       <g transform="translate(480, 570)">
-        <text x="0" y="6" fontSize="14" textAnchor="middle" className="serif-sc font-black">
+        <text x="0" y="6" fontSize="14" textAnchor="middle" className={`serif-sc ${styles.fontBlack}`}>
           灵感日历
         </text>
         <text fontSize="7" fontWeight="bold">
@@ -99,14 +100,14 @@ const CalendarSVG: React.FC<CalendarSVGProps> = ({ date, lunar, content, loading
         <>
           {/* 宜/忌活动 */}
           {content.activity && (
-            <text x="300" y="590" fontSize="48" textAnchor="middle" className="serif-sc font-bold">
+            <text x="300" y="590" fontSize="48" textAnchor="middle" className={`serif-sc ${styles.fontBold}`}>
               {content.activity}
             </text>
           )}
 
           {/* 引言区域 */}
           <foreignObject x="70" y="680" width="460" height="150">
-            <div className="serif-sc text-black text-3xl leading-relaxed">{content.quote}</div>
+            <div className={`serif-sc ${styles.quoteText}`}>{content.quote}</div>
           </foreignObject>
 
           {/* 来源信息 */}

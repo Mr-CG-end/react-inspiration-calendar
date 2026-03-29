@@ -4,6 +4,7 @@ import { formatLocalDate, parseLocalDate } from '../utils/dateUtils';
 import { getLunarInfo } from '../utils/lunar';
 import { resolveStaticContent } from '../utils/contentResolver';
 import type { CalendarContent, CalendarProps } from '../types';
+import styles from '../styles/base.module.css';
 
 type AsyncStatus = 'idle' | 'loading' | 'success' | 'error';
 
@@ -21,7 +22,7 @@ const Calendar: React.FC<CalendarProps> = ({
   className,
   fetchContent,
 }) => {
-  const rootClassName = ['w-full max-w-[24rem]', className].filter(Boolean).join(' ');
+  const rootClassName = [styles.wrapper, className].filter(Boolean).join(' ');
   const safeDate = date instanceof Date && !isNaN(date.getTime()) ? date : new Date();
   const dateKey = formatLocalDate(safeDate);
   const normalizedDate = parseLocalDate(dateKey);

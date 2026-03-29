@@ -106,10 +106,10 @@
 
 ### 基础样式迁移
 
-- [ ] 创建 `styles/base.module.css`（公共样式）
-- [ ] 将 `CalendarSVG.tsx` 中的 Tailwind 类名替换为 CSS Modules
-- [ ] 将 `Calendar.tsx` 容器的 Tailwind 类名替换为 CSS Modules
-- [ ] 移除 Tailwind CSS 相关依赖和配置（`tailwind.config.js`、`postcss.config.js`、index.css 中的 @tailwind 指令）
+- [x] 创建 `styles/base.module.css`（公共样式）
+- [x] 将 `CalendarSVG.tsx` 中的 Tailwind 类名替换为 CSS Modules
+- [x] 将 `Calendar.tsx` 容器的 Tailwind 类名替换为 CSS Modules
+- [x] 移除 Tailwind CSS 相关依赖和配置（`tailwind.config.js`、`postcss.config.js`、index.css 中的 @tailwind 指令）
 
 ### 主题注册表
 

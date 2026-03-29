@@ -3,6 +3,7 @@ import { Calendar, getLunarInfo, type CalendarContent } from '../src';
 import { formatLocalDate, parseLocalDate } from '../src/utils/dateUtils';
 import { fetchHitokoto } from './data/hitokoto';
 import localData from './data/custom.json';
+import styles from './DemoApp.module.css';
 
 type DataMode =
   | 'static'
@@ -117,16 +118,16 @@ const shiftDate = (value: Date, offset: number) =>
   new Date(value.getFullYear(), value.getMonth(), value.getDate() + offset);
 
 const baseModeButtons: Array<[DataMode, string, string]> = [
-  ['static', '单条静态', 'bg-blue-100 text-blue-800'],
-  ['local-json', '本地 JSON', 'bg-blue-100 text-blue-800'],
-  ['hitokoto', '真实 API', 'bg-blue-100 text-blue-800'],
-  ['mixed-content-fetch', '混合优先级', 'bg-purple-100 text-purple-800'],
+  ['static', '单条静态', styles.btnBlue],
+  ['local-json', '本地 JSON', styles.btnBlue],
+  ['hitokoto', '真实 API', styles.btnBlue],
+  ['mixed-content-fetch', '混合优先级', styles.btnPurple],
 ];
 
 const asyncModeButtons: Array<[DataMode, string, string]> = [
-  ['mock-slow-success', '1.5s 加载态', 'bg-orange-100 text-orange-800'],
-  ['mock-error', '接口报错兜底', 'bg-red-100 text-red-800'],
-  ['mock-race', '快速切日期竞态', 'bg-teal-100 text-teal-800'],
+  ['mock-slow-success', '1.5s 加载态', styles.btnOrange],
+  ['mock-error', '接口报错兜底', styles.btnRed],
+  ['mock-race', '快速切日期竞态', styles.btnTeal],
 ];
 
 const modeTips: Record<DataMode, string> = {
@@ -265,14 +266,14 @@ const DemoApp: React.FC = () => {
     : null;
 
   return (
-    <div className="min-h-screen bg-stone-100 flex flex-col items-center py-12 px-4">
-      <div className="w-full max-w-md bg-white p-6 rounded-2xl shadow-xl mb-12 flex flex-col gap-4 border border-stone-200">
-        <h1 className="text-xl font-bold text-gray-800 text-center tracking-widest uppercase">
+    <div className={styles.pageContainer}>
+      <div className={styles.headerCard}>
+        <h1 className={styles.title}>
           灵感日历 · Inspiration Calendar
         </h1>
 
-        <div className="flex items-center gap-4">
-          <label htmlFor="date" className="text-sm font-medium text-gray-600 shrink-0">
+        <div className={styles.inputGroup}>
+          <label htmlFor="date" className={styles.label}>
             当前首选日期
           </label>
           <input
@@ -280,75 +281,59 @@ const DemoApp: React.FC = () => {
             type="date"
             value={selectedDateKey}
             onChange={handleDateChange}
-            className="w-full px-4 py-2 border border-stone-200 rounded-xl focus:ring-2 focus:ring-black outline-none transition-all bg-stone-50"
+            className={styles.dateInput}
           />
         </div>
       </div>
 
-      <div className="w-full flex flex-col xl:flex-row items-start px-4 lg:px-12 gap-8 xl:gap-0">
-        <div className="w-full xl:flex-1 flex justify-start">
-          <div className="w-full max-w-[420px] shrink-0 bg-white rounded-2xl shadow-lg border border-stone-200 overflow-hidden">
-            <div className="p-6 pb-4 border-b border-stone-100">
-              <div className="flex items-center justify-between gap-4 flex-wrap">
-                <h2 className="text-base font-bold text-gray-800 uppercase tracking-widest">
-                  控制面板
-                </h2>
-                <div className="inline-flex rounded-xl bg-stone-100 p-1">
-                  {sideTabs.map(([tab, label]) => (
-                    <button
-                      key={tab}
-                      type="button"
-                      onClick={() => setSideTab(tab)}
-                      className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
-                        sideTab === tab
-                          ? 'bg-white text-stone-900 shadow-sm'
-                          : 'text-stone-500 hover:text-stone-700'
-                      }`}
-                    >
-                      {label}
-                    </button>
-                  ))}
-                </div>
+      <div className={styles.mainLayout}>
+        <div className={styles.controlPanelWrap}>
+          <div className={styles.controlPanel}>
+            <div className={styles.panelHeader}>
+              <h2 className={styles.panelTitle}>控制面板</h2>
+              <div className={styles.tabGroup}>
+                {sideTabs.map(([tab, label]) => (
+                  <button
+                    key={tab}
+                    type="button"
+                    onClick={() => setSideTab(tab)}
+                    className={`${styles.tabButton} ${sideTab === tab ? styles.tabButtonActive : ''}`}
+                  >
+                    {label}
+                  </button>
+                ))}
               </div>
             </div>
 
-            <div className="p-6">
+            <div className={styles.panelBody}>
               {sideTab === 'debug' ? (
-                <div className="flex flex-col gap-6">
-                  <div className="flex items-center justify-between gap-4">
-                    <span className="text-sm font-medium text-gray-600 shrink-0">
-                      可见状态 (visible)
-                    </span>
+                <>
+                  <div className={styles.sectionRow}>
+                    <span className={styles.sectionTitle}>可见状态 (visible)</span>
                     <button
                       type="button"
                       onClick={() => setVisible((prev) => !prev)}
-                      className={`px-4 py-1.5 rounded-lg text-xs font-semibold transition-all shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-1 ${
-                        visible
-                          ? 'bg-gray-800 text-white hover:bg-gray-900 focus:ring-gray-800'
-                          : 'bg-stone-200 text-stone-600 hover:bg-stone-300 focus:ring-stone-400'
-                      }`}
+                      className={`${styles.btnBase} ${visible ? styles.btnDark : styles.btnLight}`}
                     >
                       {visible ? '点击隐藏 (false)' : '点击显示 (true)'}
                     </button>
                   </div>
 
                   {dataMode === 'mock-race' && (
-                    <div className="flex items-center justify-between gap-2">
-                      <span className="text-sm font-medium text-gray-600 shrink-0">
-                        竞态日期快捷键
-                      </span>
-                      <div className="flex gap-2">
+                    <div className={styles.sectionRow}>
+                      <span className={styles.sectionTitle}>竞态日期快捷键</span>
+                      <div className={styles.buttonRow}>
                         <button
                           type="button"
                           onClick={() => setDate(toSafeDate(slowRaceDate))}
-                          className="px-3 py-1.5 rounded-lg text-xs font-medium bg-teal-100 text-teal-800 hover:brightness-95 transition-all"
+                          className={`${styles.btnBase} ${styles.btnTeal}`}
                         >
                           慢 {slowRaceDate.slice(5)}
                         </button>
                         <button
                           type="button"
                           onClick={() => setDate(toSafeDate(fastRaceDate))}
-                          className="px-3 py-1.5 rounded-lg text-xs font-medium bg-teal-100 text-teal-800 hover:brightness-95 transition-all"
+                          className={`${styles.btnBase} ${styles.btnTeal}`}
                         >
                           快 {fastRaceDate.slice(5)}
                         </button>
@@ -356,225 +341,178 @@ const DemoApp: React.FC = () => {
                     </div>
                   )}
 
-                  <div className="flex flex-col gap-4">
-                    <div className="flex flex-col gap-2">
-                      <span className="text-sm font-medium text-gray-600 shrink-0">
-                        基础及逻辑测试
-                      </span>
-                      <div className="flex gap-2 flex-wrap">
-                        {baseModeButtons.map(([mode, label, colorClass]) => (
-                          <button
-                            key={mode}
-                            type="button"
-                            onClick={() => handleModeChange(mode)}
-                            className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
-                              dataMode === mode
-                                ? 'bg-gray-800 text-white shadow-sm ring-2 ring-gray-900 ring-offset-1'
-                                : `${colorClass} hover:brightness-95`
-                            }`}
-                          >
-                            {label}
-                          </button>
-                        ))}
-                      </div>
-                    </div>
-
-                    <div className="flex flex-col gap-2">
-                      <span className="text-sm font-medium text-gray-600 shrink-0">
-                        异步状态及网络测试
-                      </span>
-                      <div className="flex gap-2 flex-wrap">
-                        {asyncModeButtons.map(([mode, label, colorClass]) => (
-                          <button
-                            key={mode}
-                            type="button"
-                            onClick={() => handleModeChange(mode)}
-                            className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
-                              dataMode === mode
-                                ? 'bg-gray-800 text-white shadow-sm ring-2 ring-gray-900 ring-offset-1'
-                                : `${colorClass} hover:brightness-95`
-                            }`}
-                          >
-                            {label}
-                          </button>
-                        ))}
-                      </div>
+                  <div className={styles.sectionRow}>
+                    <span className={styles.sectionTitle}>基础及逻辑测试</span>
+                    <div className={styles.buttonRow}>
+                      {baseModeButtons.map(([mode, label, colorClass]) => (
+                        <button
+                          key={mode}
+                          type="button"
+                          onClick={() => handleModeChange(mode)}
+                          className={`${styles.btnBase} ${dataMode === mode ? styles.btnActive : colorClass}`}
+                        >
+                          {label}
+                        </button>
+                      ))}
                     </div>
                   </div>
 
-                  <div className="rounded-xl border border-stone-200 bg-stone-50 p-4 flex flex-col gap-3">
+                  <div className={styles.sectionRow}>
+                    <span className={styles.sectionTitle}>异步状态及网络测试</span>
+                    <div className={styles.buttonRow}>
+                      {asyncModeButtons.map(([mode, label, colorClass]) => (
+                        <button
+                          key={mode}
+                          type="button"
+                          onClick={() => handleModeChange(mode)}
+                          className={`${styles.btnBase} ${dataMode === mode ? styles.btnActive : colorClass}`}
+                        >
+                          {label}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className={styles.infoCard}>
                     <div>
-                      <p className="text-sm font-semibold text-stone-800">关于此模式</p>
-                      <p className="text-xs text-stone-600 mt-1">{modeTips[dataMode]}</p>
+                      <h3 className={styles.infoTitle}>关于此模式</h3>
+                      <p className={styles.sectionDesc}>{modeTips[dataMode]}</p>
                     </div>
 
-                    <div className="flex items-center justify-between pt-2 border-t border-stone-200">
-                      <div className="flex gap-2 text-[10px] text-stone-500 font-medium font-mono uppercase">
-                        <span className="bg-stone-200 px-2 py-0.5 rounded">
-                          Requests: {requestCount}
-                        </span>
-                        <span className="bg-stone-200 px-2 py-0.5 rounded">
-                          Logs: {visibleLogs.length}
-                        </span>
+                    <div className={styles.logTools}>
+                      <div className={styles.badges}>
+                        <span className={styles.badge}>Requests: {requestCount}</span>
+                        <span className={styles.badge}>Logs: {visibleLogs.length}</span>
                       </div>
                       <button
                         type="button"
                         onClick={() => setRequestLogs([])}
-                        className="px-2 py-1 rounded text-[10px] uppercase font-bold bg-stone-200 text-stone-600 hover:bg-stone-300 transition-colors"
+                        className={styles.btnTiny}
                       >
                         Clear
                       </button>
                     </div>
 
-                    <div className="rounded-lg bg-gray-900 text-stone-300 p-3 text-xs font-mono max-h-56 overflow-y-auto leading-relaxed shadow-inner">
+                    <div className={styles.logContainer}>
                       {visibleLogs.length === 0 ? (
-                        <p className="opacity-50 text-center italic mt-2">No request logs</p>
+                        <p style={{ opacity: 0.5, textAlign: 'center', fontStyle: 'italic', marginTop: '0.5rem' }}>No request logs</p>
                       ) : (
                         visibleLogs.map((entry) => (
-                          <div
-                            key={entry.id}
-                            className="mb-1.5 border-b border-gray-800 pb-1.5 last:border-0 last:pb-0"
-                          >
-                            <span
-                              className={`font-bold mr-1 ${
-                                entry.phase === 'reject' ? 'text-red-400' : 'text-blue-300'
-                              }`}
-                            >
+                          <div key={entry.id} className={styles.logEntry}>
+                            <span className={entry.phase === 'reject' ? styles.logTagError : styles.logTagSuccess}>
                               [{entry.phase}]
                             </span>
-                            <span className="text-gray-500 text-[10px] mr-2">
-                              {entry.date.slice(5)}
-                            </span>
-                            <span className="text-gray-100">{entry.note}</span>
+                            <span className={styles.logDate}>{entry.date.slice(5)}</span>
+                            <span>{entry.note}</span>
                           </div>
                         ))
                       )}
                     </div>
                   </div>
-                </div>
+                </>
               ) : (
-                <div className="flex flex-col gap-4">
-                  <div className="flex items-center justify-between gap-3 flex-wrap">
+                <>
+                  <div className={styles.sectionRow}>
                     <div>
-                      <p className="text-sm font-semibold text-stone-800">关键日期对照</p>
-                      <p className="text-xs text-stone-600 mt-1">
-                        通过春节、闰月和跨年样例快速验证农历结果。
-                      </p>
+                      <h3 className={styles.sectionTitle}>关键日期对照</h3>
+                      <p className={styles.sectionDesc}>通过春节、闰月和跨年样例快速验证农历结果。</p>
                     </div>
-                    <div className="flex items-center gap-2">
+                    <div className={styles.buttonRow}>
                       <button
                         type="button"
                         onClick={() => setDate((prev) => shiftDate(prev, -1))}
-                        className="px-3 py-1.5 rounded-lg text-xs font-medium bg-stone-200 text-stone-700 hover:bg-stone-300 transition-colors"
+                        className={`${styles.btnBase} ${styles.btnLight}`}
                       >
                         前一天
                       </button>
                       <button
                         type="button"
                         onClick={() => setDate((prev) => shiftDate(prev, 1))}
-                        className="px-3 py-1.5 rounded-lg text-xs font-medium bg-stone-200 text-stone-700 hover:bg-stone-300 transition-colors"
+                        className={`${styles.btnBase} ${styles.btnLight}`}
                       >
                         后一天
                       </button>
                     </div>
                   </div>
 
-                  <div className="flex gap-2 flex-wrap">
+                  <div className={styles.buttonRow}>
                     {lunarValidationCases.map((item) => (
                       <button
                         key={item.date}
                         type="button"
                         onClick={() => setDate(toSafeDate(item.date))}
-                        className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
-                          selectedDateKey === item.date
-                            ? 'bg-gray-800 text-white shadow-sm ring-2 ring-gray-900 ring-offset-1'
-                            : 'bg-emerald-100 text-emerald-800 hover:brightness-95'
-                        }`}
+                        className={`${styles.btnBase} ${selectedDateKey === item.date ? styles.btnActive : styles.btnEmerald}`}
                       >
                         {item.label} {item.date.slice(5)}
                       </button>
                     ))}
                   </div>
 
-                  <div className="grid grid-cols-1 gap-3 text-xs">
-                    <div className="rounded-lg bg-stone-50 border border-stone-200 p-3 flex flex-col gap-2">
-                      <p className="font-semibold text-stone-800">当前计算结果</p>
-                      <div className="flex justify-between gap-3">
-                        <span className="text-stone-500">日期</span>
-                        <span className="font-mono text-stone-700">{selectedDateKey}</span>
-                      </div>
-                      <div className="flex justify-between gap-3">
-                        <span className="text-stone-500">公历月份</span>
-                        <span className="text-stone-700">{lunarInfo.monthInWords}</span>
-                      </div>
-                      <div className="flex justify-between gap-3">
-                        <span className="text-stone-500">星期</span>
-                        <span className="text-stone-700">{lunarInfo.weekday}</span>
-                      </div>
-                      <div className="flex justify-between gap-3">
-                        <span className="text-stone-500">农历月份</span>
-                        <span className="text-stone-700">{lunarInfo.lunarMonth}</span>
-                      </div>
-                      <div className="flex justify-between gap-3">
-                        <span className="text-stone-500">农历日期</span>
-                        <span className="text-stone-700">{lunarInfo.lunarDay}</span>
-                      </div>
+                  <div className={styles.infoCard}>
+                    <h3 className={styles.infoTitle}>当前计算结果</h3>
+                    <div className={styles.vRow}>
+                      <span className={styles.vLabel}>日期</span>
+                      <span className={styles.vValueMono}>{selectedDateKey}</span>
                     </div>
-
-                    <div className="rounded-lg bg-stone-50 border border-stone-200 p-3 flex flex-col gap-2">
-                      <p className="font-semibold text-stone-800">对照校验</p>
-                      {matchedLunarCase ? (
-                        <>
-                          <div className="flex justify-between gap-3">
-                            <span className="text-stone-500">命中样例</span>
-                            <span className="text-stone-700">
-                              {matchedLunarCase.label} ({matchedLunarCase.date})
-                            </span>
-                          </div>
-                          <div className="flex justify-between gap-3">
-                            <span className="text-stone-500">预期值</span>
-                            <span className="text-right text-stone-700">
-                              {matchedLunarCase.expected.lunarMonth}
-                              {matchedLunarCase.expected.lunarDay} /{' '}
-                              {matchedLunarCase.expected.weekday}
-                            </span>
-                          </div>
-                          <div className="flex justify-between gap-3">
-                            <span className="text-stone-500">校验结果</span>
-                            <span
-                              className={
-                                lunarValidationPassed
-                                  ? 'font-semibold text-emerald-700'
-                                  : 'font-semibold text-red-600'
-                              }
-                            >
-                              {lunarValidationPassed ? '通过' : '不通过'}
-                            </span>
-                          </div>
-                        </>
-                      ) : (
-                        <p className="text-stone-500 leading-relaxed">
-                          当前日期没有预置对照样例。点击上方关键日期按钮，可以验证春节、闰月和跨年边界。
-                        </p>
-                      )}
+                    <div className={styles.vRow}>
+                      <span className={styles.vLabel}>公历月份</span>
+                      <span className={styles.vValue}>{lunarInfo.monthInWords}</span>
+                    </div>
+                    <div className={styles.vRow}>
+                      <span className={styles.vLabel}>星期</span>
+                      <span className={styles.vValue}>{lunarInfo.weekday}</span>
+                    </div>
+                    <div className={styles.vRow}>
+                      <span className={styles.vLabel}>农历月份</span>
+                      <span className={styles.vValue}>{lunarInfo.lunarMonth}</span>
+                    </div>
+                    <div className={styles.vRow}>
+                      <span className={styles.vLabel}>农历日期</span>
+                      <span className={styles.vValue}>{lunarInfo.lunarDay}</span>
                     </div>
                   </div>
-                </div>
+
+                  <div className={styles.validationCard}>
+                    <h3 className={styles.infoTitle}>对照校验</h3>
+                    {matchedLunarCase ? (
+                      <>
+                        <div className={styles.vRow}>
+                          <span className={styles.vLabel}>命中样例</span>
+                          <span className={styles.vValue}>{matchedLunarCase.label} ({matchedLunarCase.date})</span>
+                        </div>
+                        <div className={styles.vRow}>
+                          <span className={styles.vLabel}>预期值</span>
+                          <span className={styles.vValue} style={{textAlign: 'right'}}>
+                            {matchedLunarCase.expected.lunarMonth}{matchedLunarCase.expected.lunarDay} / {matchedLunarCase.expected.weekday}
+                          </span>
+                        </div>
+                        <div className={styles.vRow}>
+                          <span className={styles.vLabel}>校验结果</span>
+                          <span className={lunarValidationPassed ? styles.vPassed : styles.vFailed}>
+                            {lunarValidationPassed ? '通过' : '不通过'}
+                          </span>
+                        </div>
+                      </>
+                    ) : (
+                      <p className={styles.sectionDesc}>当前日期没有预置对照样例。点击上方关键日期按钮，可以验证春节、闰月和跨年边界。</p>
+                    )}
+                  </div>
+                </>
               )}
             </div>
           </div>
         </div>
 
-        <div className="w-full xl:w-auto shrink-0 relative perspective-1000 flex justify-center z-10">
-          <div className="w-full max-w-md sm:w-[480px] transition-all duration-700 ease-in-out hover:scale-[1.02] transform-gpu">
-            <Calendar date={date} visible={visible} className="max-w-[28rem]" {...calendarProps} />
+        <div className={styles.previewWrap}>
+          <div className={styles.previewScaler}>
+            <Calendar date={date} visible={visible} className={styles.calendarOverride} {...calendarProps} />
           </div>
         </div>
 
-        <div className="hidden xl:block xl:flex-1"></div>
+        <div className={styles.rightSpacer}></div>
       </div>
 
-      <footer className="mt-16 text-stone-400 text-xs text-center max-w-sm tracking-wider">
+      <footer className={styles.footer}>
         <p>© 2025 INSPIRATION CALENDAR</p>
       </footer>
     </div>
