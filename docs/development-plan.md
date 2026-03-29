@@ -72,7 +72,7 @@
 - [x] 实现 `content` prop 数组模式（按 `date` 字段自动匹配当前日期）——**必须使用 `dateUtils.parseLocalDate` 进行日期比较**，禁止直接 `new Date(string)`
 - [x] 实现 `fetchContent` prop（异步函数方式）——内部日期处理同样使用 `dateUtils`
 - [x] 实现默认备用内容（当什么都不传或无匹配时）
-- [x] 处理加载态（fetchContent 异步等待时显示骨架 + spinner）*已决议：为保持纯净 SVG 体验，取消 Spinner，仅使用骨架呼吸灯动画*
+- [x] 处理加载态（fetchContent 异步等待时显示骨架 + spinner）_已决议：为保持纯净 SVG 体验，取消 Spinner，仅使用骨架呼吸灯动画_
 - [x] 处理错误态（失败时降级到备用内容）
 - [x] 处理竞态（日期快速切换时忽略过期请求的结果，只渲染最新日期的数据）
 
@@ -90,11 +90,11 @@
 
 ### 自动化测试
 
-- [ ] 为 `dateUtils`（`parseLocalDate`、`formatLocalDate`）编写单元测试，覆盖跨时区边界用例
-- [ ] 为 `content[]` 数组日期匹配逻辑编写单元测试
+- [x] 为 `dateUtils`（`parseLocalDate`、`formatLocalDate`）编写单元测试，覆盖跨时区边界用例
+- [x] 为 `content[]` 数组日期匹配逻辑编写单元测试
 - [ ] 为 `fetchContent` 竞态抑制逻辑编写单元测试（模拟快速切换场景）
-- [ ] 为农历转换（`getLunarInfo`）编写单元测试，验证代表性日期的正确性
-- [ ] 配置测试工具链（Vitest），添加 `test` 脚本到 `package.json`
+- [x] 为农历转换（`getLunarInfo`）编写单元测试，验证代表性日期的正确性
+- [x] 配置测试工具链（Vitest），添加 `test` 脚本到 `package.json`
 
 **验收**：demo 中演示所有数据传入方式、农历显示正确、显隐开关生效；**所有单元测试通过**
 

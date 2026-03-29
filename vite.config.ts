@@ -9,6 +9,10 @@ export default defineConfig({
       '@': path.resolve(__dirname, './src'),
     },
   },
+  test: {
+    environment: 'node',
+    include: ['tests/**/*.test.ts'],
+  },
   build: {
     emptyOutDir: false, // 允许跑两次命令（tsc 和 vite）放在同个目录而不被互删
     // 告诉 Vite：我们不是在打包一个普通的网站，而是在打包一个供别人下载的函数库 (Library)

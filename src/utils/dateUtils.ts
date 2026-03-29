@@ -8,13 +8,17 @@ export function parseLocalDate(dateStr: string): Date | null {
     return null;
   }
 
+  // 只接受严格的 YYYY-MM-DD，避免 parseInt 吞掉脏字符或宽松位数。
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(dateStr)) {
+    return null;
+  }
+
   const parts = dateStr.split('-');
   if (parts.length === 3) {
     const year = parseInt(parts[0], 10);
     const month = parseInt(parts[1], 10) - 1; // JS 的 Date 月份从 0 开始
     const day = parseInt(parts[2], 10);
 
-    // 拦截 NaN 的情况
     if (!isNaN(year) && !isNaN(month) && !isNaN(day)) {
       const date = new Date(year, month, day);
       // 防止 JS 引擎将 2月30日 自动纠转为 3月2日

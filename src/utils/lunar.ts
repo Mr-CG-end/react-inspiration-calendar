@@ -27,7 +27,7 @@ function normalizeLocalDate(date: Date): Date {
   }
 
   const dateKey = formatLocalDate(date);
-  return parseLocalDate(dateKey) ?? new Date();
+  return parseLocalDate(dateKey);
 }
 
 export function getLunarInfo(date: Date): LunarInfo {
@@ -41,9 +41,11 @@ export function getLunarInfo(date: Date): LunarInfo {
 
   const solar = Solar.fromYmd(
     normalizedDate.getFullYear(),
+    // 0-11
     normalizedDate.getMonth() + 1,
     normalizedDate.getDate(),
   );
+  // 转换为农历
   const lunar = solar.getLunar();
 
   const result: LunarInfo = {

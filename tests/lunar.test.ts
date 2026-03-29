@@ -1,9 +1,10 @@
-import assert from 'node:assert/strict';
+import { describe, expect, it } from 'vitest';
+
 import { getLunarInfo } from '../src/utils/lunar.ts';
 
 const cases = [
   {
-    name: '春节前一天',
+    name: '2024 年春节前一天',
     date: new Date(2024, 1, 9),
     expected: {
       monthInWords: '\u4e8c\u6708',
@@ -13,7 +14,7 @@ const cases = [
     },
   },
   {
-    name: '春节当天',
+    name: '2024 年春节当天',
     date: new Date(2024, 1, 10),
     expected: {
       monthInWords: '\u4e8c\u6708',
@@ -23,7 +24,7 @@ const cases = [
     },
   },
   {
-    name: '春节后一天',
+    name: '2024 年春节后一天',
     date: new Date(2024, 1, 11),
     expected: {
       monthInWords: '\u4e8c\u6708',
@@ -33,7 +34,7 @@ const cases = [
     },
   },
   {
-    name: '中秋节',
+    name: '2024 年中秋节',
     date: new Date(2024, 8, 17),
     expected: {
       monthInWords: '\u4e5d\u6708',
@@ -53,7 +54,7 @@ const cases = [
     },
   },
   {
-    name: '普通日期',
+    name: '普通日期样例',
     date: new Date(2026, 2, 28),
     expected: {
       monthInWords: '\u4e09\u6708',
@@ -84,26 +85,22 @@ const cases = [
   },
 ];
 
-for (const { name, date, expected } of cases) {
-  assert.deepEqual(getLunarInfo(date), expected, `农历信息与预期不符：${name}`);
-}
+describe('getLunarInfo', () => {
+  it.each(cases)('能返回正确的农历信息：$name', ({ date, expected }) => {
+    expect(getLunarInfo(date)).toEqual(expected);
+  });
 
-const early = getLunarInfo(new Date(2026, 2, 28, 0, 1, 0));
-const late = getLunarInfo(new Date(2026, 2, 28, 23, 59, 59));
+  it('同一本地自然日的不同时刻应返回相同结果', () => {
+    const early = getLunarInfo(new Date(2026, 2, 28, 0, 1, 0));
+    const late = getLunarInfo(new Date(2026, 2, 28, 23, 59, 59));
 
-assert.deepEqual(
-  early,
-  late,
-  '同一个本地自然日的农历信息应该保持一致',
-);
+    expect(early).toEqual(late);
+  });
 
-const todayInfo = getLunarInfo(new Date());
-const invalidDateInfo = getLunarInfo(new Date(Number.NaN));
+  it('输入无效日期时应回退到今天', () => {
+    const todayInfo = getLunarInfo(new Date());
+    const invalidDateInfo = getLunarInfo(new Date(Number.NaN));
 
-assert.deepEqual(
-  invalidDateInfo,
-  todayInfo,
-  '无效日期应自动回退到当前本地日期',
-);
-
-console.log('农历测试通过');
+    expect(invalidDateInfo).toEqual(todayInfo);
+  });
+});
