@@ -12,11 +12,9 @@ const DarkCalendar: React.FC<ThemeComponentProps> = ({ date, lunar, content, loa
       <defs>
         <style>
           {`
-            @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Playfair+Display:ital,wght@1,400&display=swap');
-            .dark-display { font-family: 'Cinzel', 'Times New Roman', serif; }
-            .dark-serif { font-family: 'Noto Serif SC', 'Songti SC', serif; }
-            .dark-quote { font-family: 'Playfair Display', 'Noto Serif SC', 'Songti SC', serif; font-style: italic; font-weight: 400; }
-            .dark-quote-cn { font-family: 'Noto Serif SC', 'Songti SC', 'Playfair Display', serif; font-weight: 400; }
+            .dark-display { font-family: 'Cinzel', 'Palatino Linotype', 'Bodoni MT', 'Georgia', 'Noto Serif SC', serif; }
+            .dark-serif { font-family: 'Noto Serif SC', 'Songti SC', 'Palatino Linotype', 'Georgia', serif; }
+            .dark-quote-cn { font-family: 'Noto Serif SC', 'Songti SC', 'Palatino Linotype', 'Georgia', serif; font-weight: 400; }
           `}
         </style>
 

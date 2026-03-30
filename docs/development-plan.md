@@ -23,9 +23,9 @@
 - [x] 移除 `App.tsx` 中对 `geminiService` 的导入和调用
 - [x] 创建 `src/utils/dateUtils.ts`，封装 `parseLocalDate(dateStr)` 和 `formatLocalDate(date)` 工具函数，统一项目中的本地日期处理，避免 `new Date('YYYY-MM-DD')` 的 UTC 时区陷阱
 - [x] 替换 `App.tsx` 中 `new Date(e.target.value)` / `toISOString()` 为上述工具函数
-- [x] 确认项目仍能正常启动（`pnpm dev`）并通过 `pnpm build`
+- [x] 确认项目仍能正常启动 Demo 页面（`pnpm dev`）并通过 `pnpm build`
 
-**验收**：`pnpm dev` 启动无报错，`pnpm build` 构建无报错，页面可展示（使用硬编码内容）
+**验收**：`pnpm dev` 启动 Demo 无报错，`pnpm build` 构建无报错，页面可展示（使用硬编码内容）
 
 ---
 
@@ -42,7 +42,7 @@
   - [x] `demo/DemoApp.tsx`（原 App.tsx 改造）
 - [x] 创建 `vite.demo.config.ts`（以 `demo/index.html` 为入口的独立 Vite 配置，仅供本地开发使用）
 - [x] 修改 `vite.config.ts` → Vite Library Mode（仅用于 `pnpm build` 构建库产物），并在 `build.rollupOptions.external` 中显式排除 `react` 和 `react-dom`（含 `react/jsx-runtime`），确保库产物不捆绑 React
-- [x] 在 `package.json` 中添加 `dev:demo` 脚本：`vite --config vite.demo.config.ts`
+- [x] 在 `package.json` 中更新 `dev` 脚本：`vite --config vite.demo.config.ts`
 - [x] 修改 `package.json`：
   - [x] 添加 `main`、`module`、`types`、`exports`（含 `./style.css` 子路径导出）、`files` 字段
   - [x] 将 `react` 和 `react-dom` 从 `dependencies` **移到** `peerDependencies`（不能同时保留在 dependencies 中，否则消费者会出现 React 实例重复）
@@ -54,9 +54,9 @@
 - [x] 验证使用方可通过 `import 'react-inspiration-calendar/style.css'` 正常加载样式
 - [x] 验证 `pnpm build` 构建成功，产物在 `dist/`（含 `index.js` + `index.cjs` + `.d.ts` + `style.css`）
 - [x] 验证构建产物中**不包含 React 实现代码**（产物应仅保留 `import "react"` 等外部引用声明，不应包含 `createElement`、`__SECRET_INTERNALS` 等 React 内部实现；可用 `npx rg "createElement|__SECRET_INTERNALS" dist/` 或打开产物文件人工检查）
-- [x] 验证 `pnpm dev:demo` 演示应用可正常运行
+- [x] 验证 `pnpm dev` 演示应用可正常运行
 
-**验收**：`pnpm build` 生成 `index.js` + `index.cjs` + `.d.ts` + `style.css`（不含 UMD），产物不捆绑 React，`pnpm dev:demo` 可跑，`style.css` 子路径导出可用
+**验收**：`pnpm build` 生成 `index.js` + `index.cjs` + `.d.ts` + `style.css`（不含 UMD），产物不捆绑 React，`pnpm dev` 可跑，`style.css` 子路径导出可用
 
 ---
 
@@ -145,9 +145,9 @@
 - [x] 更新 `README.md`（安装、使用示例、API 文档、主题说明）
 - [x] 添加 `LICENSE` 文件
 - [x] 确认 `.gitignore` 和 `package.json` 的 `files` 字段正确（只发布 `dist/`）
-- [ ] `npm pack` 本地打包，在另一个项目中安装测试
-- [ ] 验证导入、类型提示、样式加载均正常
-- [ ] `npm publish` 发布
+- [x] `npm pack` 本地打包，在另一个项目中安装测试
+- [x] 验证导入、类型提示、样式加载均正常
+- [x] `npm publish` 发布
 
 **验收**：在一个全新的 React 项目中 `npm install` 你的包，能正常渲染日历
 
@@ -168,4 +168,4 @@ P0 (清理) → P1 (骨架) → P2 (功能) → P3 (样式) → P4 (发布)
 - P3 依赖 P2（功能稳定后才做样式迁移，避免返工）
 - P4 依赖 P3（所有功能和样式完成后才准备发布）
 
-> 每个阶段完成后，都要确认 `pnpm build` 和 `pnpm dev:demo` 正常，再进入下一阶段。
+> 每个阶段完成后，都要确认 `pnpm build` 和 `pnpm dev` 正常，再进入下一阶段。

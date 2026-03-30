@@ -14,11 +14,9 @@ const MinimalistCalendar: React.FC<ThemeComponentProps> = ({ date, lunar, conten
       <defs>
         <style>
           {`
-            @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;1,400&family=Playfair+Display:wght@400;500&display=swap');
-            .min-serif { font-family: 'Playfair Display', 'Cormorant Garamond', 'Noto Serif SC', 'Songti SC', serif; }
+            .min-serif { font-family: 'Playfair Display', 'Palatino Linotype', 'Georgia', 'Noto Serif SC', 'Songti SC', serif; }
             .min-sans { font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Noto Sans SC', sans-serif; }
-            .min-italic { font-family: 'Cormorant Garamond', 'Playfair Display', 'Noto Serif SC', serif; font-style: italic; }
-            .min-quote { font-family: 'Noto Serif SC', 'Songti SC', 'Cormorant Garamond', serif; font-weight: 400; }
+            .min-quote { font-family: 'Noto Serif SC', 'Songti SC', 'Palatino Linotype', 'Georgia', serif; font-weight: 400; }
           `}
         </style>
       </defs>

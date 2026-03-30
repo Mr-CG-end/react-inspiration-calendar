@@ -27,7 +27,8 @@ function normalizeLocalDate(date: Date): Date {
   }
 
   const dateKey = formatLocalDate(date);
-  return parseLocalDate(dateKey);
+  // 上方已校验 date 有效性 不会返回 null
+  return parseLocalDate(dateKey) ?? date;
 }
 
 export function getLunarInfo(date: Date): LunarInfo {

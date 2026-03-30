@@ -26,7 +26,7 @@ const Calendar: React.FC<CalendarProps> = ({
   const rootClassName = [styles.wrapper, className].filter(Boolean).join(' ');
   const safeDate = date instanceof Date && !isNaN(date.getTime()) ? date : new Date();
   const dateKey = formatLocalDate(safeDate);
-  const normalizedDate = parseLocalDate(dateKey);
+  const normalizedDate = parseLocalDate(dateKey) ?? safeDate;
   const lunar = getLunarInfo(normalizedDate);
   const staticContent = resolveStaticContent(content, normalizedDate);
   const hasContentProp = content !== undefined;
@@ -64,7 +64,7 @@ const Calendar: React.FC<CalendarProps> = ({
     const requestId = ++requestIdRef.current;
     setAsyncState({ status: 'loading', content: null });
 
-    fetchContent(parseLocalDate(dateKey))
+    fetchContent(normalizedDate)
       .then((result) => {
         if (requestId !== requestIdRef.current) return;
         setAsyncState({
@@ -83,6 +83,7 @@ const Calendar: React.FC<CalendarProps> = ({
     return () => {
       requestIdRef.current += 1;
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- normalizedDate 是 dateKey 的纯派生值，dateKey 变化时 normalizedDate 一定同步更新
   }, [dateKey, hasContentProp, fetchContent, visible]);
 
   if (!visible) {

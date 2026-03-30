@@ -1,7 +1,7 @@
 /**
  * 解析本地日期字符串（YYYY-MM-DD），避免 new Date('YYYY-MM-DD') 的 UTC 时区陷阱。
  * @param dateStr 格式为 YYYY-MM-DD 的日期字符串
- * @returns 代表本地该日零点的 Date 对象，如果解析失败返回当前时间
+ * @returns 代表本地该日零点的 Date 对象，如果解析失败返回 null
  */
 export function parseLocalDate(dateStr: string): Date | null {
   if (!dateStr || typeof dateStr !== 'string' || dateStr.trim() === '') {

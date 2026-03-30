@@ -8,7 +8,9 @@
 [![license](https://img.shields.io/npm/l/@ort-fe/react-inspiration-calendar)](./LICENSE)
 
 <img src="https://raw.githubusercontent.com/yuanjingteam/react-inspiration-calendar/main/docs/assets/classic.png" width="30%" alt="Classic Theme" />
+&nbsp;&nbsp;&nbsp;
 <img src="https://raw.githubusercontent.com/yuanjingteam/react-inspiration-calendar/main/docs/assets/dark.png" width="30%" alt="Dark Theme" />
+&nbsp;&nbsp;&nbsp;
 <img src="https://raw.githubusercontent.com/yuanjingteam/react-inspiration-calendar/main/docs/assets/minimalist.png" width="30%" alt="Minimalist Theme" />
 
 </div>
@@ -128,6 +130,25 @@ export default function App() {
 | `classic`    | 默认主题，白底黑字，中式衬线排版 |
 | `dark`       | 深色背景，金色强调色             |
 | `minimalist` | 浅色极简风格，大留白布局         |
+
+### 字体增强
+
+如果希望获得更精致的视觉效果，可以引入以下 Google Fonts：
+
+```html
+<!-- Dark 主题推荐 -->
+<link
+  href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&display=swap"
+  rel="stylesheet"
+/>
+<!-- Minimalist 主题推荐 -->
+<link
+  href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500&display=swap"
+  rel="stylesheet"
+/>
+```
+
+组件会优先使用这些字体，无需修改任何代码。
 
 ## Props
 

@@ -39,13 +39,13 @@
     "./style.css": "./dist/style.css"
   },
   "scripts": {
-    "dev": "vite",
-    "dev:demo": "vite --config vite.demo.config.ts",
-    "build": "node -e \"require('node:fs').rmSync('dist', { recursive: true, force: true })\" && pnpm run format && pnpm run lint && tsc -p tsconfig.build.json && vite build",
+    "dev": "vite --config vite.demo.config.ts",
+    "build": "node -e \"require('node:fs').rmSync('dist', { recursive: true, force: true })\" && pnpm run lint && tsc -p tsconfig.build.json && vite build",
     "preview": "vite preview",
     "lint": "eslint .",
     "test": "vitest run",
     "test:watch": "vitest",
+    "format:check": "prettier --check \"**/*.{ts,tsx,js,json,md,css}\"",
     "format": "prettier --write \"**/*.{ts,tsx,js,json,md,css}\""
   },
   "peerDependencies": {
