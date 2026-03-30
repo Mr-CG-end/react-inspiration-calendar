@@ -142,9 +142,9 @@
 
 - [x] 移除 `package.json` 中的 `"private": true`（否则 `npm publish` 会被阻止）
 - [x] 确认 `package.json` 发布元数据完整：`name`、`version`（非占位 0.0.0）、`license`、`repository`、`description`、`keywords`
-- [ ] 更新 `README.md`（安装、使用示例、API 文档、主题说明）
-- [ ] 添加 `LICENSE` 文件
-- [ ] 确认 `.gitignore` 和 `package.json` 的 `files` 字段正确（只发布 `dist/`）
+- [x] 更新 `README.md`（安装、使用示例、API 文档、主题说明）
+- [x] 添加 `LICENSE` 文件
+- [x] 确认 `.gitignore` 和 `package.json` 的 `files` 字段正确（只发布 `dist/`）
 - [ ] `npm pack` 本地打包，在另一个项目中安装测试
 - [ ] 验证导入、类型提示、样式加载均正常
 - [ ] `npm publish` 发布
