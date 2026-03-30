@@ -1,6 +1,8 @@
+/* Demo 专用全局样式 — 仅用于本地演示，不会发布到 npm */
 body {
   font-family: 'Noto Sans SC', sans-serif;
   background-color: #f5f5f5;
+  margin: 0;
 }
 
 .serif-sc {

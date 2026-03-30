@@ -14,7 +14,9 @@ react-inspiration-calendar/
 │   │       ├── MinimalistCalendar.tsx # minimalist 主题渲染
 │   │       └── index.ts             # 主题注册表
 │   ├── utils/
-│   │   └── lunar.ts              # 真实农历计算（基于 lunar-javascript）
+│   │   ├── lunar.ts              # 真实农历计算（基于 lunar-javascript）
+│   │   ├── dateUtils.ts          # 本地日期解析与格式化
+│   │   └── contentResolver.ts    # 静态内容解析（日期匹配 + 无日期轮播）
 │   ├── styles/
 │   │   ├── base.module.css       # 公共基础样式
 │   │   ├── classic.module.css    # classic 主题样式
@@ -24,6 +26,7 @@ react-inspiration-calendar/
 ├── demo/                         # 本地演示应用（不发布到 npm）
 │   ├── index.html
 │   ├── main.tsx
+│   ├── global.css                # Demo 专用全局样式
 │   └── DemoApp.tsx
 ├── dist/                         # 构建产物（git ignore）
 ├── docs/                         # 项目文档
@@ -256,8 +259,8 @@ interface ThemeComponentProps {
 
 | 文件              | 格式            | 用途                                 |
 | ----------------- | --------------- | ------------------------------------ |
-| `dist/*.es.js`    | ESModule        | 现代打包工具使用（`import`）         |
-| `dist/*.cjs`      | CommonJS        | Node.js / 旧版工具使用（`require`）  |
+| `dist/index.js`   | ESModule        | 现代打包工具使用（`import`）         |
+| `dist/index.cjs`  | CommonJS        | Node.js / 旧版工具使用（`require`）  |
 | `dist/style.css`  | CSS             | 组件样式（用户需手动 `import` 引入） |
 | `dist/index.d.ts` | TypeScript 声明 | 类型提示支持                         |
 

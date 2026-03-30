@@ -1,6 +1,7 @@
 import type { CalendarContent, CalendarProps } from '../types';
 import { formatLocalDate, parseLocalDate } from './dateUtils';
 
+// 以此日为"第 0 天"，按天数差值对内容数组取模，保证同一日期每次都展示同一条。
 const CONTENT_ROTATION_ANCHOR_UTC = Date.UTC(2026, 2, 26);
 
 export function isSameLocalDate(dateStr: string, targetDate: Date): boolean {

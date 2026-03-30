@@ -1,29 +1,13 @@
+/* 公共基础样式 — 所有主题共享 */
 .wrapper {
   width: 100%;
   max-width: 24rem;
 }
 
-.calendar {
+/* 所有主题的 SVG 根元素共享样式，主题通过 composes 引用 */
+.calendarBase {
   display: block;
   width: 100%;
   height: auto;
-  background-color: #ffffff;
-  box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
-  border: 1px solid #f3f4f6;
-  border-radius: 1rem;
   overflow: hidden;
-}
-
-.fontBold {
-  font-weight: 700;
-}
-
-.fontBlack {
-  font-weight: 900;
-}
-
-.quoteText {
-  color: #000000;
-  font-size: 1.875rem;
-  line-height: 1.625;
 }

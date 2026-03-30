@@ -16,6 +16,7 @@ const DarkCalendar: React.FC<ThemeComponentProps> = ({ date, lunar, content, loa
             .dark-display { font-family: 'Cinzel', 'Times New Roman', serif; }
             .dark-serif { font-family: 'Noto Serif SC', 'Songti SC', serif; }
             .dark-quote { font-family: 'Playfair Display', 'Noto Serif SC', 'Songti SC', serif; font-style: italic; font-weight: 400; }
+            .dark-quote-cn { font-family: 'Noto Serif SC', 'Songti SC', 'Playfair Display', serif; font-weight: 400; }
           `}
         </style>
 
@@ -41,7 +42,7 @@ const DarkCalendar: React.FC<ThemeComponentProps> = ({ date, lunar, content, loa
       <text
         x="60"
         y="80"
-        fontSize="12"
+        fontSize="15"
         fill={COLOR_GLOW}
         className="dark-serif"
         fontWeight="500"
@@ -55,7 +56,7 @@ const DarkCalendar: React.FC<ThemeComponentProps> = ({ date, lunar, content, loa
       <text
         x="300"
         y="80"
-        fontSize="12"
+        fontSize="14"
         textAnchor="middle"
         fill={COLOR_GLOW}
         className="dark-serif"
@@ -69,7 +70,7 @@ const DarkCalendar: React.FC<ThemeComponentProps> = ({ date, lunar, content, loa
       <text
         x="540"
         y="80"
-        fontSize="12"
+        fontSize="15"
         textAnchor="end"
         fill={COLOR_GLOW}
         className="dark-serif"
@@ -168,15 +169,13 @@ const DarkCalendar: React.FC<ThemeComponentProps> = ({ date, lunar, content, loa
             />
           </g>
 
-          {/* --- 引言区域：纤薄、深邃的斜体字重对比 --- */}
-          {/* 大量下沉释放空间，取消杂乱的背景光 */}
+          {/* --- 引言区域：正体衬线 + 金色辉光的仪式感 --- */}
           <foreignObject x="80" y="650" width="440" height="140">
             <div
-              className={`${styles.quoteText} dark-quote`}
+              className={`${styles.quoteText} dark-quote-cn`}
               style={{
                 color: '#DBC277',
                 opacity: 0.85,
-                fontSize: '1.25rem',
                 lineHeight: '2.2',
                 textAlign: 'center',
               }}
@@ -189,7 +188,7 @@ const DarkCalendar: React.FC<ThemeComponentProps> = ({ date, lunar, content, loa
           <text
             x="300"
             y="790"
-            fontSize="12"
+            fontSize="14"
             fill={COLOR_GLOW}
             className="dark-serif"
             textAnchor="middle"
@@ -225,7 +224,7 @@ const DarkCalendar: React.FC<ThemeComponentProps> = ({ date, lunar, content, loa
       <text
         x="300"
         y="864"
-        fontSize="10"
+        fontSize="12"
         textAnchor="middle"
         fill={COLOR_GLOW}
         className="dark-display"

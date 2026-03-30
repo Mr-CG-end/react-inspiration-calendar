@@ -18,6 +18,7 @@ const MinimalistCalendar: React.FC<ThemeComponentProps> = ({ date, lunar, conten
             .min-serif { font-family: 'Playfair Display', 'Cormorant Garamond', 'Noto Serif SC', 'Songti SC', serif; }
             .min-sans { font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Noto Sans SC', sans-serif; }
             .min-italic { font-family: 'Cormorant Garamond', 'Playfair Display', 'Noto Serif SC', serif; font-style: italic; }
+            .min-quote { font-family: 'Noto Serif SC', 'Songti SC', 'Cormorant Garamond', serif; font-weight: 400; }
           `}
         </style>
       </defs>
@@ -34,7 +35,7 @@ const MinimalistCalendar: React.FC<ThemeComponentProps> = ({ date, lunar, conten
       <text
         x="60"
         y="100"
-        fontSize="14"
+        fontSize="16"
         className="min-sans"
         fill={COLOR_SECONDARY}
         letterSpacing="4"
@@ -45,7 +46,7 @@ const MinimalistCalendar: React.FC<ThemeComponentProps> = ({ date, lunar, conten
       <text
         x="540"
         y="100"
-        fontSize="14"
+        fontSize="15"
         textAnchor="end"
         className="min-sans"
         fill={COLOR_SECONDARY}
@@ -92,15 +93,14 @@ const MinimalistCalendar: React.FC<ThemeComponentProps> = ({ date, lunar, conten
             </text>
           )}
 
-          {/* 打破居中，引言采用左对齐斜体排布，制造非对称的文学呼吸感 */}
+          {/* 左对齐排布，以正体衬线和留白制造文学呼吸感 */}
           <foreignObject x="80" y="620" width="440" height="180">
             <div
-              className={`${styles.quoteText} min-italic`}
+              className={`${styles.quoteText} min-quote`}
               style={{
                 textAlign: 'left',
                 color: COLOR_PRIMARY,
-                fontSize: '1.25rem',
-                lineHeight: '2',
+                lineHeight: '2.2',
               }}
             >
               {content.quote}
@@ -110,7 +110,7 @@ const MinimalistCalendar: React.FC<ThemeComponentProps> = ({ date, lunar, conten
           <text
             x="80"
             y="820"
-            fontSize="14"
+            fontSize="15"
             className="min-sans"
             fill={COLOR_SECONDARY}
             letterSpacing="1"

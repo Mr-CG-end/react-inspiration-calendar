@@ -91,7 +91,7 @@ const ClassicCalendar: React.FC<ThemeComponentProps> = ({ date, lunar, content, 
             textAnchor="middle"
             dominantBaseline="hanging"
           >
-            2025 INSPIRATION CALENDAR
+            {`${date.getFullYear()} INSPIRATION CALENDAR`}
           </textPath>
         </text>
       </g>

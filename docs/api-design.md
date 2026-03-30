@@ -44,7 +44,7 @@ interface CalendarProps {
    * 当 content 和 fetchContent 都传入时，content 优先
    * 注意：传入的 date 为本地日期（非 UTC），详见下方"日期约定"章节
    */
-  fetchContent?: (date: Date) => Promise<CalendarContent>;
+  fetchContent?: (date: Date) => Promise<CalendarContent | null | undefined>;
 
   /**
    * 日历样式主题
@@ -130,8 +130,8 @@ interface LunarInfo {
 ### 最简使用
 
 ```tsx
-import { Calendar } from 'react-inspiration-calendar';
-import 'react-inspiration-calendar/style.css';
+import { Calendar } from '@ort-fe/react-inspiration-calendar';
+import '@ort-fe/react-inspiration-calendar/style.css';
 
 function App() {
   return <Calendar />;
@@ -186,9 +186,10 @@ function toLocalDateString(date: Date): string {
   return `${y}-${m}-${d}`;
 }
 
-async function getContent(date: Date): Promise<CalendarContent> {
+async function getContent(date: Date): Promise<CalendarContent | null> {
   // ⚠️ 不要使用 date.toISOString()，它会按 UTC 截断，跨时区可能偏移一天
   const res = await fetch(`/api/calendar/${toLocalDateString(date)}`);
+  if (!res.ok) return null;
   return res.json();
 }
 
@@ -244,7 +245,7 @@ function getLunarInfo(date: Date): LunarInfo;
 ### 使用示例
 
 ```typescript
-import { getLunarInfo } from 'react-inspiration-calendar';
+import { getLunarInfo } from '@ort-fe/react-inspiration-calendar';
 
 // 查询今天的农历信息
 const info = getLunarInfo(new Date());
@@ -262,7 +263,7 @@ console.log(`${specificInfo.lunarMonth}${specificInfo.lunarDay}`); // 例如：'
 
 ```tsx
 // 在 React 组件中独立使用
-import { getLunarInfo } from 'react-inspiration-calendar';
+import { getLunarInfo } from '@ort-fe/react-inspiration-calendar';
 
 function LunarBadge({ date }: { date: Date }) {
   const { lunarMonth, lunarDay } = getLunarInfo(date);

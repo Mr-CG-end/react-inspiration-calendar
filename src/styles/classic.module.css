@@ -1,13 +1,10 @@
 /* Classic 主题：白底黑字，中式书法排版 */
 .calendar {
-  display: block;
-  width: 100%;
-  height: auto;
+  composes: calendarBase from './base.module.css';
   background-color: #ffffff;
   box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
   border: 1px solid #f3f4f6;
   border-radius: 1rem;
-  overflow: hidden;
 }
 
 .quoteText {
